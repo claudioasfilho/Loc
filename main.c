@@ -88,11 +88,7 @@ static const gecko_configuration_t config = {
 /* Flag for indicating DFU Reset must be performed */
 uint8_t boot_to_dfu = 0;
 
-uint8_t UARTbuffer[64]= "UART test 123 hhh\n\r";
-uint8_t UARTbufferctr;
-uint8_t * pUARTbuffer;
 
-uint32_t SOFReceived=0;
 
 /**
  * @brief  Main function
@@ -114,45 +110,16 @@ int main(void)
   InitPWM1();
   InitLEUART0();
   UpdatePWM1(85);
-  //InitUSART0();
+  ClearSOFReceived();
 
-
-  //InitUARTdrv();
 
 #ifndef TESTING
 
 
   while (1)
   {
-
-	  //LEUART_Tx(LEUART0, 0x32);
-	  UART_Tx(&UARTbuffer, 19);
-
-	  //resultif = LEUART0->IF & 0x4;
-	  //if((LEUART0->IF & 0x4) ==0x4)
-
-
-
-	  if((LEUART0->IF & 0x200) ==0x200)
-	  {
-		  UARTbufferctr=0;
-		  LEUART_IntClear(LEUART0, 0x200);
-		  UARTbuffer[UARTbufferctr] = LEUART0->RXDATA;
-
-		  SOFReceived =1;
-
-
-	  }
-
-	  if (((LEUART0->IF & 0x4) ==0x4) && (SOFReceived==1))
-			  {
-				  UARTbuffer[UARTbufferctr] = LEUART0->RXDATA;
-				  LEUART_Tx(LEUART0, UARTbuffer[UARTbufferctr]);
-				  if((UARTbuffer[UARTbufferctr]=='\r') || (UARTbufferctr++==63)) SOFReceived =0;
-
-			  }
-
-
+	  UART_TXHandler();
+	  UART_RXHandler();
 	  for (int counterr=0; counterr<0x3fff; counterr++);
 
 	// UART_Tx(&UARTbuffer, 19);

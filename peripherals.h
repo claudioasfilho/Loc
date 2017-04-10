@@ -32,7 +32,9 @@ void InitUSART0(void);
 
 void InitLEUART0(void);
 void UART_Tx(uint8_t *buffer, uint16_t size);
-
+void UART_RXHandler(void);
+void UART_TXHandler(void);
+void ClearSOFReceived();
 
 void InitPWM1(void);
 void UpdatePWM1(uint32_t desiredDutyCycle);
