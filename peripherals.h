@@ -22,6 +22,10 @@
 /* PWM frequency */
 #define PWM_FREQ 20000
 
+
+#define UARTBUFFERSIZE 64
+#define UART_SOF '$'
+#define UART_EOF '\r'
 #define USART0_DATA_AVAILABLE 0xf5
 
 /***********************************************************************************************//**

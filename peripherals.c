@@ -122,15 +122,12 @@ void UpdatePWM1(uint32_t desiredDutyCycle) //desiredDutyCycle varies from 0-100;
 
 /* UART VARIABLES */
 
-#define UARTBUFFERSIZE 64
-#define UART_SOF '$'
-#define UART_EOF '\r'
+
 
 static uint32_t leuartif;
-static uint32_t len;
 static uint8_t UARTbuffer[UARTBUFFERSIZE]= "UART test 123 hhh\n\r";
 static uint8_t UARTbufferctr;
-static uint8_t * pUARTbuffer;
+
 
 uint32_t SOFReceived=0;
 
@@ -197,7 +194,7 @@ void InitLEUART0(void) {
 
 }
 
-void UART_Tx(uint8_t* buffer, uint16_t size)
+void UART_Tx(uint8_t * buffer, uint16_t size)
 {
 	uint16_t counter;
 
@@ -260,7 +257,7 @@ void ClearSOFReceived()
 void UART_TXHandler(void)
 {
 
-	  UART_Tx(&UARTbuffer, UARTBUFFERSIZE);
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
 
 }
 

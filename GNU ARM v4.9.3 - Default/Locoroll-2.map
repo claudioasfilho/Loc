@@ -1274,35 +1274,35 @@ OUTPUT(Locoroll-2.axf elf32-littlearm)
  .comment       0x0000000000000000       0x71 ./emlib/em_system.o
  .comment       0x0000000000000000       0x71 ./src/InitDevice.o
 
-.debug_info     0x0000000000000000    0x1562d
+.debug_info     0x0000000000000000    0x15617
  .debug_info    0x0000000000000000      0x98e ./em_timer.o
  .debug_info    0x000000000000098e      0x6a5 ./gatt_db.o
  .debug_info    0x0000000000001033     0x48e9 ./main.o
- .debug_info    0x000000000000591c     0x4969 ./peripherals.o
- .debug_info    0x000000000000a285     0x1851 ./bgapi/dmadrv.o
- .debug_info    0x000000000000bad6      0xa62 ./bgapi/em_leuart.o
- .debug_info    0x000000000000c538      0x1c0 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_info    0x000000000000c6f8     0x31e1 ./emlib/em_cmu.o
- .debug_info    0x000000000000f8d9     0x27a6 ./emlib/em_emu.o
- .debug_info    0x000000000001207f      0xebd ./emlib/em_gpio.o
- .debug_info    0x0000000000012f3c      0x6ec ./emlib/em_rtcc.o
- .debug_info    0x0000000000013628      0x26d ./emlib/em_system.o
- .debug_info    0x0000000000013895     0x1d98 ./src/InitDevice.o
+ .debug_info    0x000000000000591c     0x4953 ./peripherals.o
+ .debug_info    0x000000000000a26f     0x1851 ./bgapi/dmadrv.o
+ .debug_info    0x000000000000bac0      0xa62 ./bgapi/em_leuart.o
+ .debug_info    0x000000000000c522      0x1c0 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_info    0x000000000000c6e2     0x31e1 ./emlib/em_cmu.o
+ .debug_info    0x000000000000f8c3     0x27a6 ./emlib/em_emu.o
+ .debug_info    0x0000000000012069      0xebd ./emlib/em_gpio.o
+ .debug_info    0x0000000000012f26      0x6ec ./emlib/em_rtcc.o
+ .debug_info    0x0000000000013612      0x26d ./emlib/em_system.o
+ .debug_info    0x000000000001387f     0x1d98 ./src/InitDevice.o
 
-.debug_abbrev   0x0000000000000000     0x21bc
+.debug_abbrev   0x0000000000000000     0x21af
  .debug_abbrev  0x0000000000000000      0x1ca ./em_timer.o
  .debug_abbrev  0x00000000000001ca       0xce ./gatt_db.o
  .debug_abbrev  0x0000000000000298      0x254 ./main.o
- .debug_abbrev  0x00000000000004ec      0x386 ./peripherals.o
- .debug_abbrev  0x0000000000000872      0x38f ./bgapi/dmadrv.o
- .debug_abbrev  0x0000000000000c01      0x2e6 ./bgapi/em_leuart.o
- .debug_abbrev  0x0000000000000ee7      0x104 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_abbrev  0x0000000000000feb      0x478 ./emlib/em_cmu.o
- .debug_abbrev  0x0000000000001463      0x4a3 ./emlib/em_emu.o
- .debug_abbrev  0x0000000000001906      0x2d4 ./emlib/em_gpio.o
- .debug_abbrev  0x0000000000001bda      0x1e2 ./emlib/em_rtcc.o
- .debug_abbrev  0x0000000000001dbc      0x109 ./emlib/em_system.o
- .debug_abbrev  0x0000000000001ec5      0x2f7 ./src/InitDevice.o
+ .debug_abbrev  0x00000000000004ec      0x379 ./peripherals.o
+ .debug_abbrev  0x0000000000000865      0x38f ./bgapi/dmadrv.o
+ .debug_abbrev  0x0000000000000bf4      0x2e6 ./bgapi/em_leuart.o
+ .debug_abbrev  0x0000000000000eda      0x104 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_abbrev  0x0000000000000fde      0x478 ./emlib/em_cmu.o
+ .debug_abbrev  0x0000000000001456      0x4a3 ./emlib/em_emu.o
+ .debug_abbrev  0x00000000000018f9      0x2d4 ./emlib/em_gpio.o
+ .debug_abbrev  0x0000000000001bcd      0x1e2 ./emlib/em_rtcc.o
+ .debug_abbrev  0x0000000000001daf      0x109 ./emlib/em_system.o
+ .debug_abbrev  0x0000000000001eb8      0x2f7 ./src/InitDevice.o
 
 .debug_loc      0x0000000000000000     0x6509
  .debug_loc     0x0000000000000000      0x18c ./em_timer.o
@@ -1360,47 +1360,47 @@ OUTPUT(Locoroll-2.axf elf32-littlearm)
  .debug_ranges  0x0000000000001168       0x18 ./emlib/em_system.o
  .debug_ranges  0x0000000000001180       0xf8 ./src/InitDevice.o
 
-.debug_line     0x0000000000000000     0x4a0a
+.debug_line     0x0000000000000000     0x4a0e
  .debug_line    0x0000000000000000      0x4ac ./em_timer.o
  .debug_line    0x00000000000004ac      0x1d9 ./gatt_db.o
  .debug_line    0x0000000000000685      0x4d3 ./main.o
- .debug_line    0x0000000000000b58      0x5c5 ./peripherals.o
- .debug_line    0x000000000000111d      0x70f ./bgapi/dmadrv.o
- .debug_line    0x000000000000182c      0x532 ./bgapi/em_leuart.o
- .debug_line    0x0000000000001d5e      0x1fe ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_line    0x0000000000001f5c      0xd7e ./emlib/em_cmu.o
- .debug_line    0x0000000000002cda      0xa59 ./emlib/em_emu.o
- .debug_line    0x0000000000003733      0x4e8 ./emlib/em_gpio.o
- .debug_line    0x0000000000003c1b      0x45e ./emlib/em_rtcc.o
- .debug_line    0x0000000000004079      0x37f ./emlib/em_system.o
- .debug_line    0x00000000000043f8      0x612 ./src/InitDevice.o
+ .debug_line    0x0000000000000b58      0x5c9 ./peripherals.o
+ .debug_line    0x0000000000001121      0x70f ./bgapi/dmadrv.o
+ .debug_line    0x0000000000001830      0x532 ./bgapi/em_leuart.o
+ .debug_line    0x0000000000001d62      0x1fe ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_line    0x0000000000001f60      0xd7e ./emlib/em_cmu.o
+ .debug_line    0x0000000000002cde      0xa59 ./emlib/em_emu.o
+ .debug_line    0x0000000000003737      0x4e8 ./emlib/em_gpio.o
+ .debug_line    0x0000000000003c1f      0x45e ./emlib/em_rtcc.o
+ .debug_line    0x000000000000407d      0x37f ./emlib/em_system.o
+ .debug_line    0x00000000000043fc      0x612 ./src/InitDevice.o
 
-.debug_str      0x0000000000000000     0xb435
+.debug_str      0x0000000000000000     0xb434
  .debug_str     0x0000000000000000      0x975 ./em_timer.o
                                         0x9e3 (size before relaxing)
  .debug_str     0x0000000000000975      0x7e1 ./gatt_db.o
                                         0x97d (size before relaxing)
  .debug_str     0x0000000000001156     0x6054 ./main.o
                                        0x65f5 (size before relaxing)
- .debug_str     0x00000000000071aa      0x632 ./peripherals.o
-                                       0x56eb (size before relaxing)
- .debug_str     0x00000000000077dc      0xf37 ./bgapi/dmadrv.o
+ .debug_str     0x00000000000071aa      0x631 ./peripherals.o
+                                       0x56df (size before relaxing)
+ .debug_str     0x00000000000077db      0xf37 ./bgapi/dmadrv.o
                                        0x117c (size before relaxing)
- .debug_str     0x0000000000008713      0x16e ./bgapi/em_leuart.o
+ .debug_str     0x0000000000008712      0x16e ./bgapi/em_leuart.o
                                         0x738 (size before relaxing)
- .debug_str     0x0000000000008881      0x105 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_str     0x0000000000008880      0x105 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
                                         0x2ba (size before relaxing)
- .debug_str     0x0000000000008986      0xf36 ./emlib/em_cmu.o
+ .debug_str     0x0000000000008985      0xf36 ./emlib/em_cmu.o
                                        0x13e3 (size before relaxing)
- .debug_str     0x00000000000098bc      0xe8b ./emlib/em_emu.o
+ .debug_str     0x00000000000098bb      0xe8b ./emlib/em_emu.o
                                        0x1859 (size before relaxing)
- .debug_str     0x000000000000a747      0x270 ./emlib/em_gpio.o
+ .debug_str     0x000000000000a746      0x270 ./emlib/em_gpio.o
                                         0x840 (size before relaxing)
- .debug_str     0x000000000000a9b7      0x5d6 ./emlib/em_rtcc.o
+ .debug_str     0x000000000000a9b6      0x5d6 ./emlib/em_rtcc.o
                                         0x808 (size before relaxing)
- .debug_str     0x000000000000af8d       0xff ./emlib/em_system.o
+ .debug_str     0x000000000000af8c       0xff ./emlib/em_system.o
                                         0x30d (size before relaxing)
- .debug_str     0x000000000000b08c      0x3a9 ./src/InitDevice.o
+ .debug_str     0x000000000000b08b      0x3a9 ./src/InitDevice.o
                                        0x185b (size before relaxing)
 
 .debug_frame    0x0000000000000000     0x1008
