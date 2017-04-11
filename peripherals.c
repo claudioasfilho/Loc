@@ -22,6 +22,7 @@
 
 OBJFLAGS PWMObj;
 OBJFLAGS UARTObj;
+GPIOS UserGPIOs;
 
 /**************************************************************************//**
  * @brief GPIO Related Functions  and variables
@@ -53,21 +54,24 @@ void InitGPIO(void) {
 	//UIF LED0 - PIN P30 on WSTK
 	/* Pin PF4 is configured to Push-pull */
 	GPIO_PinModeSet(gpioPortF, 4, gpioModePushPull, 0);
+	UserGPIOs.bits.LED0 = 0;	//Logic Definition
 
 	//UIF LED1 - PIN P32 on WSTK
 	/* Pin PF5 is configured to Push-pull */
 	GPIO_PinModeSet(gpioPortF, 5, gpioModePushPull, 0);
+	UserGPIOs.bits.LED1 = 0;	//Logic Definition
 
 	//UIF PB0 - PIN P34 on WSTK
 	/* Pin PF6 is configured to Input enabled with filter */
 	GPIO_PinModeSet(gpioPortF, 6, gpioModeInput, 1);
+	UserGPIOs.bits.PB0 = 0;	//Logic Definition
 
 	//UIF PB1 - PIN P36 on WSTK
 	/* Pin PF7 is configured to Input enabled with filter */
 	GPIO_PinModeSet(gpioPortF, 7, gpioModeInput, 1);
+	UserGPIOs.bits.PB1 = 0;	//Logic Definition
+
 	// [Port F Configuration]$
-
-
 
 	/*Other GPIOs*/
 
@@ -82,9 +86,30 @@ void InitGPIO(void) {
 	// [Port A Configuration]$
 
 
+
 }
 
+void GPIOHandler(void)
+{
+	if (UserGPIOs.bits.LED0 != GPIO_PinOutGet(gpioPortF, 4))
+		{
+			if (UserGPIOs.bits.LED0==1)  GPIO_PinOutSet(gpioPortF, 4);
+			else  GPIO_PinOutClear(gpioPortF, 4);
+		}
 
+	if (UserGPIOs.bits.LED1 != GPIO_PinOutGet(gpioPortF, 5))
+		{
+			if (UserGPIOs.bits.LED1==1)  GPIO_PinOutSet(gpioPortF, 5);
+			else  GPIO_PinOutClear(gpioPortF, 5);
+		}
+
+	if(GPIO_PinInGet(gpioPortF,6)==0) UserGPIOs.bits.PB0=1;
+	else UserGPIOs.bits.PB0=0;
+
+	if(GPIO_PinInGet(gpioPortF,7)==0) UserGPIOs.bits.PB1=1;
+	else UserGPIOs.bits.PB1=0;
+
+}
 
 /**************************************************************************//**
  * @brief PWM Related Functions  and variables

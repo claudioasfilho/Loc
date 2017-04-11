@@ -32,7 +32,6 @@ typedef union
         {
 
 	struct{
-		uint8_t			GPIOS:8;		//For GPIO Only - It carries the State of the GPIOs
 		uint8_t			TXready:1;		//For UART Only - It indicates when to Transmit
 	  	uint8_t			RXready:1;		//For UART Only - It indicates when data is available
 	  	uint8_t			Unused2:1;
@@ -43,8 +42,34 @@ typedef union
 	  	uint8_t			Status:1;		//Does it need attention?
 	}bits;
 
-	uint16_t all;
+	uint8_t all;
     } OBJFLAGS;
+
+
+typedef union
+		{
+
+	struct{
+		uint8_t			LED0:1;
+		uint8_t			LED1:1;
+		uint8_t			PB0:1;
+		uint8_t			PB1:1;
+		uint8_t			Unused1:1;
+		uint8_t			Unused2:1;
+		uint8_t			Unused3:1;
+		uint8_t			Unused4:1;
+		uint8_t			Unused5:1;
+		uint8_t			Unused6:1;
+		uint8_t			Unused7:1;
+		uint8_t			Unused8:1;
+		uint8_t			Unused9:1;
+		uint8_t			Unused10:1;
+		uint8_t			Unused11:1;
+		uint8_t			Unused12:1;
+	}bits;
+
+	uint16_t all;
+	} GPIOS;
 
 extern uint8_t UARTbuffer[UARTBUFFERSIZE];
 
@@ -57,6 +82,7 @@ extern uint8_t UARTbuffer[UARTBUFFERSIZE];
 void InitPWM1(void);
 void UpdatePWM1(uint32_t DutyCycle);
 void PWMHandler(void);
+void GPIOHandler(void);
 
 
 void InitLEUART0(void);

@@ -124,7 +124,7 @@ int main(void)
 	  UART_TXHandler();
 	  UART_RXHandler();
 	  PWMHandler();
-
+	  GPIOHandler();
 	  for (int counterr=0; counterr<0x3fff; counterr++);
 
   }
