@@ -46,7 +46,7 @@ typedef union
 	uint8_t all;
     } OBJFLAGS;
 
-
+extern uint8_t UARTbuffer[UARTBUFFERSIZE];
 
 /***********************************************************************************************//**
  * @addtogroup Application

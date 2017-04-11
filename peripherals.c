@@ -149,7 +149,7 @@ void PWMHandler(void)
 
 
 static uint32_t leuartif;
-static uint8_t UARTbuffer[UARTBUFFERSIZE];
+uint8_t UARTbuffer[UARTBUFFERSIZE];
 static uint8_t UARTbufferctr;
 
 
@@ -158,7 +158,6 @@ uint32_t SOFReceived=0;
 
 void InitLEUART0(void) {
 
-	uint32_t leuartif;
 
 	// $[LEUART0 initialization]
 	LEUART_Init_TypeDef initleuart = LEUART_INIT_DEFAULT;
@@ -321,7 +320,7 @@ void UART_RXHandler(void)
 		  {
 			  UARTbufferctr=0;
 			  LEUART_IntClear(LEUART0, 0x200);
-			  UARTbuffer[UARTbufferctr++] = LEUART0->RXDATA;
+
 
 			  SOFReceived =1;
 

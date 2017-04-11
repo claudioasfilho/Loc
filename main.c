@@ -51,6 +51,7 @@
 #include "peripherals.h"
 #include "em_usart.h"
 #include "em_leuart.h"
+#include <stdio.h>
 
 
 
@@ -88,7 +89,7 @@ static const gecko_configuration_t config = {
 /* Flag for indicating DFU Reset must be performed */
 uint8_t boot_to_dfu = 0;
 
-uint8_t UARTbuffer[UARTBUFFERSIZE]= "UART test 123 hhh\n\r";
+
 
 /**
  * @brief  Main function
@@ -106,6 +107,8 @@ int main(void)
 
   /* Initialize peripherals */
   enter_DefaultMode_from_RESET();
+
+  sprintf(UARTbuffer, "UART test 123 hhh\n\r",UARTBUFFERSIZE);
 
   InitPWM1();
   InitLEUART0();
