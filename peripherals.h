@@ -32,7 +32,7 @@ typedef union
         {
 
 	struct{
-
+		uint8_t			GPIOS:8;		//For GPIO Only - It carries the State of the GPIOs
 		uint8_t			TXready:1;		//For UART Only - It indicates when to Transmit
 	  	uint8_t			RXready:1;		//For UART Only - It indicates when data is available
 	  	uint8_t			Unused2:1;
@@ -43,7 +43,7 @@ typedef union
 	  	uint8_t			Status:1;		//Does it need attention?
 	}bits;
 
-	uint8_t all;
+	uint16_t all;
     } OBJFLAGS;
 
 extern uint8_t UARTbuffer[UARTBUFFERSIZE];

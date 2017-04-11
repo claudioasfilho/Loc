@@ -24,6 +24,69 @@ OBJFLAGS PWMObj;
 OBJFLAGS UARTObj;
 
 /**************************************************************************//**
+ * @brief GPIO Related Functions  and variables
+ *
+ *****************************************************************************/
+
+
+void InitGPIO(void) {
+
+	// $[Port A Configuration]
+
+	/*UART Function Related GPIOs*/
+
+	//LE UART TX - PIN P9 on WSTK
+	GPIO_PinModeSet(gpioPortA, 0, gpioModePushPull, 1);
+
+	//LE UART RX - PIN P37 on WSTK
+	GPIO_PinModeSet(gpioPortD, 9, gpioModeInput, 0);
+
+
+	/*PWM Function Related GPIOs*/
+
+	//PWM Output - PIN P7 on WSTK
+	GPIO_PinModeSet(gpioPortC, 9, gpioModePushPull, 0);
+
+
+	/*General Purpose Function Related GPIOs*/
+
+	//UIF LED0 - PIN P30 on WSTK
+	/* Pin PF4 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortF, 4, gpioModePushPull, 0);
+
+	//UIF LED1 - PIN P32 on WSTK
+	/* Pin PF5 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortF, 5, gpioModePushPull, 0);
+
+	//UIF PB0 - PIN P34 on WSTK
+	/* Pin PF6 is configured to Input enabled with filter */
+	GPIO_PinModeSet(gpioPortF, 6, gpioModeInput, 1);
+
+	//UIF PB1 - PIN P36 on WSTK
+	/* Pin PF7 is configured to Input enabled with filter */
+	GPIO_PinModeSet(gpioPortF, 7, gpioModeInput, 1);
+	// [Port F Configuration]$
+
+
+
+	/*Other GPIOs*/
+
+	/* Pin PA1 is configured to Input enabled */
+	GPIO_PinModeSet(gpioPortA, 1, gpioModeInput, 0);
+
+	/* Pin PA3 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortA, 3, gpioModePushPull, 0);
+
+	/* Pin PA5 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortA, 5, gpioModePushPull, 1);
+	// [Port A Configuration]$
+
+
+}
+
+
+
+/**************************************************************************//**
  * @brief PWM Related Functions  and variables
  *
  *****************************************************************************/

@@ -108,12 +108,11 @@ int main(void)
   /* Initialize peripherals */
   enter_DefaultMode_from_RESET();
 
-  sprintf(UARTbuffer, "UART test 123 hhh\n\r",UARTBUFFERSIZE);
+  sprintf((char *)UARTbuffer, "UART test 123456789 Complete Sprintf    \n\r");
 
   InitPWM1();
   InitLEUART0();
   UpdatePWM1(15);
- // ClearSOFReceived();
 
 
 #ifndef TESTING
@@ -128,7 +127,6 @@ int main(void)
 
 	  for (int counterr=0; counterr<0x3fff; counterr++);
 
-	// UART_Tx(&UARTbuffer, 19);
   }
 
 #endif
