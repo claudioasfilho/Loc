@@ -32,6 +32,8 @@ Archive member included because of file (symbol)
 Allocating common symbols
 Common symbol       size              file
 
+UARTObj             0x1               ./peripherals.o
+PWMObj              0x1               ./peripherals.o
 bluetooth_stack_heap
                     0x18d0            ./main.o
 
@@ -95,7 +97,10 @@ Discarded input sections
  .text          0x0000000000000000        0x0 ./peripherals.o
  .data          0x0000000000000000        0x0 ./peripherals.o
  .bss           0x0000000000000000        0x0 ./peripherals.o
- .text.UART_Tx  0x0000000000000000       0x24 ./peripherals.o
+ .text.UART_TxOut
+                0x0000000000000000       0x24 ./peripherals.o
+ .text.ClearSOFReceived
+                0x0000000000000000        0xc ./peripherals.o
  .text          0x0000000000000000        0x0 ./bgapi/dmadrv.o
  .data          0x0000000000000000        0x0 ./bgapi/dmadrv.o
  .bss           0x0000000000000000        0x0 ./bgapi/dmadrv.o
@@ -777,7 +782,7 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
  *fill*         0x00000000000209e4      0x61c 
                 0x0000000000021000                __text_start__ = .
 
-.text_app       0x0000000000021000     0x1e7c
+.text_app       0x0000000000021000     0x1f28
  *(.AAT)
  .AAT           0x0000000000021000       0x80 ./main.o
                 0x0000000000021000                AppAddressTable
@@ -842,189 +847,194 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
                 0x0000000000021684       0x84 ./em_timer.o
                 0x0000000000021684                TIMER_InitCC
  .text.startup.main
-                0x0000000000021708       0x2c ./main.o
+                0x0000000000021708       0x38 ./main.o
                 0x0000000000021708                main
  .text.InitPWM1
-                0x0000000000021734       0x98 ./peripherals.o
-                0x0000000000021734                InitPWM1
+                0x0000000000021740       0xa0 ./peripherals.o
+                0x0000000000021740                InitPWM1
  .text.UpdatePWM1
-                0x00000000000217cc       0x40 ./peripherals.o
-                0x00000000000217cc                UpdatePWM1
+                0x00000000000217e0       0x18 ./peripherals.o
+                0x00000000000217e0                UpdatePWM1
+ .text.ChangePWMoutput
+                0x00000000000217f8       0x48 ./peripherals.o
+                0x00000000000217f8                ChangePWMoutput
+ .text.PWMHandler
+                0x0000000000021840       0x24 ./peripherals.o
+                0x0000000000021840                PWMHandler
  .text.InitLEUART0
-                0x000000000002180c       0x90 ./peripherals.o
-                0x000000000002180c                InitLEUART0
+                0x0000000000021864       0xa0 ./peripherals.o
+                0x0000000000021864                InitLEUART0
+ .text.UART_Tx  0x0000000000021904       0x2c ./peripherals.o
+                0x0000000000021904                UART_Tx
  .text.LEUART0_IRQHandler
-                0x000000000002189c       0x18 ./peripherals.o
-                0x000000000002189c                LEUART0_IRQHandler
- .text.ClearSOFReceived
-                0x00000000000218b4        0xc ./peripherals.o
-                0x00000000000218b4                ClearSOFReceived
+                0x0000000000021930       0x18 ./peripherals.o
+                0x0000000000021930                LEUART0_IRQHandler
  .text.UART_TXHandler
-                0x00000000000218c0       0x20 ./peripherals.o
-                0x00000000000218c0                UART_TXHandler
+                0x0000000000021948       0x38 ./peripherals.o
+                0x0000000000021948                UART_TXHandler
  .text.UART_RXHandler
-                0x00000000000218e0       0x78 ./peripherals.o
-                0x00000000000218e0                UART_RXHandler
+                0x0000000000021980       0x84 ./peripherals.o
+                0x0000000000021980                UART_RXHandler
  .text.LDMA_IRQHandler
-                0x0000000000021958       0x7c ./bgapi/dmadrv.o
-                0x0000000000021958                LDMA_IRQHandler
+                0x0000000000021a04       0x7c ./bgapi/dmadrv.o
+                0x0000000000021a04                LDMA_IRQHandler
  .text.LEUART_BaudrateSet
-                0x00000000000219d4       0x54 ./bgapi/em_leuart.o
-                0x00000000000219d4                LEUART_BaudrateSet
+                0x0000000000021a80       0x54 ./bgapi/em_leuart.o
+                0x0000000000021a80                LEUART_BaudrateSet
  .text.LEUART_Init
-                0x0000000000021a28       0x4c ./bgapi/em_leuart.o
-                0x0000000000021a28                LEUART_Init
+                0x0000000000021ad4       0x4c ./bgapi/em_leuart.o
+                0x0000000000021ad4                LEUART_Init
  .text.LEUART_Tx
-                0x0000000000021a74       0x18 ./bgapi/em_leuart.o
-                0x0000000000021a74                LEUART_Tx
+                0x0000000000021b20       0x18 ./bgapi/em_leuart.o
+                0x0000000000021b20                LEUART_Tx
  .text.Default_Handler
-                0x0000000000021a8c        0x4 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
-                0x0000000000021a8c                IDAC0_IRQHandler
-                0x0000000000021a8c                USART0_TX_IRQHandler
-                0x0000000000021a8c                I2C0_IRQHandler
-                0x0000000000021a8c                HardFault_Handler
-                0x0000000000021a8c                SysTick_Handler
-                0x0000000000021a8c                USART1_RX_IRQHandler
-                0x0000000000021a8c                PendSV_Handler
-                0x0000000000021a8c                NMI_Handler
-                0x0000000000021a8c                SYNTH_IRQHandler
-                0x0000000000021a8c                WDOG0_IRQHandler
-                0x0000000000021a8c                USART1_TX_IRQHandler
-                0x0000000000021a8c                MSC_IRQHandler
-                0x0000000000021a8c                ADC0_IRQHandler
-                0x0000000000021a8c                UsageFault_Handler
-                0x0000000000021a8c                FPUEH_IRQHandler
-                0x0000000000021a8c                GPIO_EVEN_IRQHandler
-                0x0000000000021a8c                TIMER0_IRQHandler
-                0x0000000000021a8c                LETIMER0_IRQHandler
-                0x0000000000021a8c                TIMER1_IRQHandler
-                0x0000000000021a8c                RFSENSE_IRQHandler
-                0x0000000000021a8c                BUFC_IRQHandler
-                0x0000000000021a8c                MODEM_IRQHandler
-                0x0000000000021a8c                Default_Handler
-                0x0000000000021a8c                RAC_SEQ_IRQHandler
-                0x0000000000021a8c                FRC_PRI_IRQHandler
-                0x0000000000021a8c                EMU_IRQHandler
-                0x0000000000021a8c                FRC_IRQHandler
-                0x0000000000021a8c                CRYOTIMER_IRQHandler
-                0x0000000000021a8c                PCNT0_IRQHandler
-                0x0000000000021a8c                AGC_IRQHandler
-                0x0000000000021a8c                ACMP0_IRQHandler
-                0x0000000000021a8c                USART0_RX_IRQHandler
-                0x0000000000021a8c                MemManage_Handler
-                0x0000000000021a8c                SVC_Handler
-                0x0000000000021a8c                RTCC_IRQHandler
-                0x0000000000021a8c                CRYPTO_IRQHandler
-                0x0000000000021a8c                CMU_IRQHandler
-                0x0000000000021a8c                RAC_RSM_IRQHandler
-                0x0000000000021a8c                GPIO_ODD_IRQHandler
-                0x0000000000021a8c                PROTIMER_IRQHandler
-                0x0000000000021a8c                BusFault_Handler
-                0x0000000000021a8c                DebugMon_Handler
+                0x0000000000021b38        0x4 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+                0x0000000000021b38                IDAC0_IRQHandler
+                0x0000000000021b38                USART0_TX_IRQHandler
+                0x0000000000021b38                I2C0_IRQHandler
+                0x0000000000021b38                HardFault_Handler
+                0x0000000000021b38                SysTick_Handler
+                0x0000000000021b38                USART1_RX_IRQHandler
+                0x0000000000021b38                PendSV_Handler
+                0x0000000000021b38                NMI_Handler
+                0x0000000000021b38                SYNTH_IRQHandler
+                0x0000000000021b38                WDOG0_IRQHandler
+                0x0000000000021b38                USART1_TX_IRQHandler
+                0x0000000000021b38                MSC_IRQHandler
+                0x0000000000021b38                ADC0_IRQHandler
+                0x0000000000021b38                UsageFault_Handler
+                0x0000000000021b38                FPUEH_IRQHandler
+                0x0000000000021b38                GPIO_EVEN_IRQHandler
+                0x0000000000021b38                TIMER0_IRQHandler
+                0x0000000000021b38                LETIMER0_IRQHandler
+                0x0000000000021b38                TIMER1_IRQHandler
+                0x0000000000021b38                RFSENSE_IRQHandler
+                0x0000000000021b38                BUFC_IRQHandler
+                0x0000000000021b38                MODEM_IRQHandler
+                0x0000000000021b38                Default_Handler
+                0x0000000000021b38                RAC_SEQ_IRQHandler
+                0x0000000000021b38                FRC_PRI_IRQHandler
+                0x0000000000021b38                EMU_IRQHandler
+                0x0000000000021b38                FRC_IRQHandler
+                0x0000000000021b38                CRYOTIMER_IRQHandler
+                0x0000000000021b38                PCNT0_IRQHandler
+                0x0000000000021b38                AGC_IRQHandler
+                0x0000000000021b38                ACMP0_IRQHandler
+                0x0000000000021b38                USART0_RX_IRQHandler
+                0x0000000000021b38                MemManage_Handler
+                0x0000000000021b38                SVC_Handler
+                0x0000000000021b38                RTCC_IRQHandler
+                0x0000000000021b38                CRYPTO_IRQHandler
+                0x0000000000021b38                CMU_IRQHandler
+                0x0000000000021b38                RAC_RSM_IRQHandler
+                0x0000000000021b38                GPIO_ODD_IRQHandler
+                0x0000000000021b38                PROTIMER_IRQHandler
+                0x0000000000021b38                BusFault_Handler
+                0x0000000000021b38                DebugMon_Handler
  .text.Reset_Handler
-                0x0000000000021a90       0x34 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
-                0x0000000000021a90                Reset_Handler
+                0x0000000000021b3c       0x34 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+                0x0000000000021b3c                Reset_Handler
  .text.flashWaitStateMax
-                0x0000000000021ac4       0x40 ./emlib/em_cmu.o
+                0x0000000000021b70       0x40 ./emlib/em_cmu.o
  .text.CMU_OscillatorTuningSet.part.2
-                0x0000000000021b04       0x44 ./emlib/em_cmu.o
+                0x0000000000021bb0       0x44 ./emlib/em_cmu.o
  .text.CMU_ClockEnable
-                0x0000000000021b48       0x8c ./emlib/em_cmu.o
-                0x0000000000021b48                CMU_ClockEnable
+                0x0000000000021bf4       0x8c ./emlib/em_cmu.o
+                0x0000000000021bf4                CMU_ClockEnable
  .text.CMU_ClockSelectGet
-                0x0000000000021bd4       0xa4 ./emlib/em_cmu.o
-                0x0000000000021bd4                CMU_ClockSelectGet
+                0x0000000000021c80       0xa4 ./emlib/em_cmu.o
+                0x0000000000021c80                CMU_ClockSelectGet
  .text.lfClkGet
-                0x0000000000021c78       0x94 ./emlib/em_cmu.o
+                0x0000000000021d24       0x94 ./emlib/em_cmu.o
  .text.CMU_ClockFreqGet
-                0x0000000000021d0c      0x128 ./emlib/em_cmu.o
-                0x0000000000021d0c                CMU_ClockFreqGet
+                0x0000000000021db8      0x128 ./emlib/em_cmu.o
+                0x0000000000021db8                CMU_ClockFreqGet
  .text.CMU_OscillatorTuningWait
-                0x0000000000021e34       0x60 ./emlib/em_cmu.o
-                0x0000000000021e34                CMU_OscillatorTuningWait
+                0x0000000000021ee0       0x60 ./emlib/em_cmu.o
+                0x0000000000021ee0                CMU_OscillatorTuningWait
  .text.CMU_OscillatorEnable
-                0x0000000000021e94      0x110 ./emlib/em_cmu.o
-                0x0000000000021e94                CMU_OscillatorEnable
+                0x0000000000021f40      0x110 ./emlib/em_cmu.o
+                0x0000000000021f40                CMU_OscillatorEnable
  .text.CMU_ClockSelectSet
-                0x0000000000021fa4      0x158 ./emlib/em_cmu.o
-                0x0000000000021fa4                CMU_ClockSelectSet
+                0x0000000000022050      0x158 ./emlib/em_cmu.o
+                0x0000000000022050                CMU_ClockSelectSet
  .text.CMU_HFXOInit
-                0x00000000000220fc       0xec ./emlib/em_cmu.o
-                0x00000000000220fc                CMU_HFXOInit
+                0x00000000000221a8       0xec ./emlib/em_cmu.o
+                0x00000000000221a8                CMU_HFXOInit
  .text.CMU_LFXOInit
-                0x00000000000221e8       0x40 ./emlib/em_cmu.o
-                0x00000000000221e8                CMU_LFXOInit
+                0x0000000000022294       0x40 ./emlib/em_cmu.o
+                0x0000000000022294                CMU_LFXOInit
  .text.currentLimitersUpdate
-                0x0000000000022228       0x74 ./emlib/em_emu.o
+                0x00000000000222d4       0x74 ./emlib/em_emu.o
  .text.EMU_DCDCModeSet
-                0x000000000002229c       0x4c ./emlib/em_emu.o
-                0x000000000002229c                EMU_DCDCModeSet
+                0x0000000000022348       0x4c ./emlib/em_emu.o
+                0x0000000000022348                EMU_DCDCModeSet
  .text.EMU_DCDCOutputVoltageSet
-                0x00000000000222e8      0x1cc ./emlib/em_emu.o
-                0x00000000000222e8                EMU_DCDCOutputVoltageSet
+                0x0000000000022394      0x1cc ./emlib/em_emu.o
+                0x0000000000022394                EMU_DCDCOutputVoltageSet
  .text.EMU_DCDCOptimizeSlice
-                0x00000000000224b4       0x94 ./emlib/em_emu.o
-                0x00000000000224b4                EMU_DCDCOptimizeSlice
+                0x0000000000022560       0x94 ./emlib/em_emu.o
+                0x0000000000022560                EMU_DCDCOptimizeSlice
  .text.EMU_DCDCLnRcoBandSet
-                0x0000000000022548       0x24 ./emlib/em_emu.o
-                0x0000000000022548                EMU_DCDCLnRcoBandSet
+                0x00000000000225f4       0x24 ./emlib/em_emu.o
+                0x00000000000225f4                EMU_DCDCLnRcoBandSet
  .text.EMU_DCDCInit
-                0x000000000002256c      0x18c ./emlib/em_emu.o
-                0x000000000002256c                EMU_DCDCInit
+                0x0000000000022618      0x18c ./emlib/em_emu.o
+                0x0000000000022618                EMU_DCDCInit
  .text.GPIO_PinModeSet
-                0x00000000000226f8       0x8c ./emlib/em_gpio.o
-                0x00000000000226f8                GPIO_PinModeSet
+                0x00000000000227a4       0x8c ./emlib/em_gpio.o
+                0x00000000000227a4                GPIO_PinModeSet
  .text.RTCC_Init
-                0x0000000000022784       0x48 ./emlib/em_rtcc.o
-                0x0000000000022784                RTCC_Init
+                0x0000000000022830       0x48 ./emlib/em_rtcc.o
+                0x0000000000022830                RTCC_Init
  .text.SYSTEM_ChipRevisionGet
-                0x00000000000227cc       0x34 ./emlib/em_system.o
-                0x00000000000227cc                SYSTEM_ChipRevisionGet
+                0x0000000000022878       0x34 ./emlib/em_system.o
+                0x0000000000022878                SYSTEM_ChipRevisionGet
  .text.EMU_enter_DefaultMode_from_RESET
-                0x0000000000022800       0x54 ./src/InitDevice.o
-                0x0000000000022800                EMU_enter_DefaultMode_from_RESET
+                0x00000000000228ac       0x54 ./src/InitDevice.o
+                0x00000000000228ac                EMU_enter_DefaultMode_from_RESET
  .text.CMU_enter_DefaultMode_from_RESET
-                0x0000000000022854      0x114 ./src/InitDevice.o
-                0x0000000000022854                CMU_enter_DefaultMode_from_RESET
+                0x0000000000022900      0x114 ./src/InitDevice.o
+                0x0000000000022900                CMU_enter_DefaultMode_from_RESET
  .text.RTCC_enter_DefaultMode_from_RESET
-                0x0000000000022968       0x44 ./src/InitDevice.o
-                0x0000000000022968                RTCC_enter_DefaultMode_from_RESET
+                0x0000000000022a14       0x44 ./src/InitDevice.o
+                0x0000000000022a14                RTCC_enter_DefaultMode_from_RESET
  .text.PORTIO_enter_DefaultMode_from_RESET
-                0x00000000000229ac       0x80 ./src/InitDevice.o
-                0x00000000000229ac                PORTIO_enter_DefaultMode_from_RESET
+                0x0000000000022a58       0x80 ./src/InitDevice.o
+                0x0000000000022a58                PORTIO_enter_DefaultMode_from_RESET
  .text.enter_DefaultMode_from_RESET
-                0x0000000000022a2c       0x9c ./src/InitDevice.o
-                0x0000000000022a2c                enter_DefaultMode_from_RESET
- .text.exit     0x0000000000022ac8       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-exit.o)
-                0x0000000000022ac8                exit
+                0x0000000000022ad8       0x9c ./src/InitDevice.o
+                0x0000000000022ad8                enter_DefaultMode_from_RESET
+ .text.exit     0x0000000000022b74       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-exit.o)
+                0x0000000000022b74                exit
  .text.__libc_init_array
-                0x0000000000022ae8       0x50 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-init.o)
-                0x0000000000022ae8                __libc_init_array
- .text.memset   0x0000000000022b38       0x9c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-memset.o)
-                0x0000000000022b38                memset
+                0x0000000000022b94       0x50 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-init.o)
+                0x0000000000022b94                __libc_init_array
+ .text.memset   0x0000000000022be4       0x9c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-memset.o)
+                0x0000000000022be4                memset
  .text.startup.register_fini
-                0x0000000000022bd4       0x14 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
+                0x0000000000022c80       0x14 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
  .text.__call_exitprocs
-                0x0000000000022be8       0xd4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
-                0x0000000000022be8                __call_exitprocs
- .text.atexit   0x0000000000022cbc        0xc /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-atexit.o)
-                0x0000000000022cbc                atexit
+                0x0000000000022c94       0xd4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
+                0x0000000000022c94                __call_exitprocs
+ .text.atexit   0x0000000000022d68        0xc /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-atexit.o)
+                0x0000000000022d68                atexit
  .text.__libc_fini_array
-                0x0000000000022cc8       0x2c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-fini.o)
-                0x0000000000022cc8                __libc_fini_array
+                0x0000000000022d74       0x2c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-fini.o)
+                0x0000000000022d74                __libc_fini_array
  .text.__register_exitproc
-                0x0000000000022cf4       0xa4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__atexit.o)
-                0x0000000000022cf4                __register_exitproc
- .text._exit    0x0000000000022d98        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libnosys.a(_exit.o)
-                0x0000000000022d98                _exit
+                0x0000000000022da0       0xa4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__atexit.o)
+                0x0000000000022da0                __register_exitproc
+ .text._exit    0x0000000000022e44        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libnosys.a(_exit.o)
+                0x0000000000022e44                _exit
  *(.init)
- .init          0x0000000000022d9c        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crti.o
-                0x0000000000022d9c                _init
- .init          0x0000000000022da0        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtn.o
+ .init          0x0000000000022e48        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crti.o
+                0x0000000000022e48                _init
+ .init          0x0000000000022e4c        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtn.o
  *(.fini)
- .fini          0x0000000000022da8        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crti.o
-                0x0000000000022da8                _fini
- .fini          0x0000000000022dac        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtn.o
+ .fini          0x0000000000022e54        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crti.o
+                0x0000000000022e54                _fini
+ .fini          0x0000000000022e58        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtn.o
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -1036,60 +1046,60 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
  *(SORT(.dtors.*))
  *(.dtors)
  *(.rodata*)
- .rodata        0x0000000000022db4       0x18 ./peripherals.o
+ .rodata        0x0000000000022e60       0x18 ./peripherals.o
  .rodata.CSWTCH.45
-                0x0000000000022dcc        0xc ./emlib/em_cmu.o
+                0x0000000000022e78        0xc ./emlib/em_cmu.o
  .rodata.CSWTCH.46
-                0x0000000000022dd8       0x10 ./emlib/em_cmu.o
+                0x0000000000022e84       0x10 ./emlib/em_cmu.o
  .rodata.CSWTCH.47
-                0x0000000000022de8       0x10 ./emlib/em_cmu.o
+                0x0000000000022e94       0x10 ./emlib/em_cmu.o
  .rodata.CSWTCH.48
-                0x0000000000022df8       0x10 ./emlib/em_cmu.o
- .rodata        0x0000000000022e08       0x68 ./src/InitDevice.o
+                0x0000000000022ea4       0x10 ./emlib/em_cmu.o
+ .rodata        0x0000000000022eb4       0x68 ./src/InitDevice.o
  .rodata.str1.4
-                0x0000000000022e70        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-impure.o)
+                0x0000000000022f1c        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-impure.o)
                                           0x2 (size before relaxing)
  .rodata._global_impure_ptr
-                0x0000000000022e74        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-impure.o)
-                0x0000000000022e74                _global_impure_ptr
+                0x0000000000022f20        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-impure.o)
+                0x0000000000022f20                _global_impure_ptr
  *(.eh_frame*)
- .eh_frame      0x0000000000022e78        0x0 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtbegin.o
- .eh_frame      0x0000000000022e78        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtend.o
-                0x0000000000022e7c                . = ALIGN (0x4)
+ .eh_frame      0x0000000000022f24        0x0 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtbegin.o
+ .eh_frame      0x0000000000022f24        0x4 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtend.o
+                0x0000000000022f28                . = ALIGN (0x4)
 
-.glue_7         0x0000000000022e7c        0x0
+.glue_7         0x0000000000022f28        0x0
  .glue_7        0x0000000000000000        0x0 linker stubs
 
-.glue_7t        0x0000000000022e7c        0x0
+.glue_7t        0x0000000000022f28        0x0
  .glue_7t       0x0000000000000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000022e7c        0x0
+.vfp11_veneer   0x0000000000022f28        0x0
  .vfp11_veneer  0x0000000000000000        0x0 linker stubs
 
-.v4_bx          0x0000000000022e7c        0x0
+.v4_bx          0x0000000000022f28        0x0
  .v4_bx         0x0000000000000000        0x0 linker stubs
 
-.iplt           0x0000000000022e7c        0x0
+.iplt           0x0000000000022f28        0x0
  .iplt          0x0000000000000000        0x0 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtbegin.o
 
-.igot.plt       0x0000000000022e7c        0x0
+.igot.plt       0x0000000000022f28        0x0
  .igot.plt      0x0000000000000000        0x0 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtbegin.o
 
 .text_app_ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000000000022e7c                __exidx_start = .
+                0x0000000000022f28                __exidx_start = .
 
 .text_app_ARM.exidx
-                0x0000000000022e7c        0x8
+                0x0000000000022f28        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000000000022e7c        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/crt0.o
-                0x0000000000022e84                __exidx_end = .
-                0x0000000000022e84                __etext = .
+ .ARM.exidx     0x0000000000022f28        0x8 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/crt0.o
+                0x0000000000022f30                __exidx_end = .
+                0x0000000000022f30                __etext = .
 
-.rel.dyn        0x0000000000022e84        0x0
+.rel.dyn        0x0000000000022f30        0x0
  .rel.iplt      0x0000000000000000        0x0 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7e-m/softfp/crtbegin.o
 
-.text_app_data  0x0000000020003000      0x490 load address 0x0000000000022e84
+.text_app_data  0x0000000020003000      0x490 load address 0x0000000000022f30
                 0x0000000020003000                __data_start__ = .
  *(vtable)
  *(.data*)
@@ -1098,7 +1108,8 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
                 0x0000000020003000                bg_gattdb_data_attribute_field_6_data
  *fill*         0x000000002000300d        0x3 
  .data.UARTbuffer
-                0x0000000020003010       0x40 ./peripherals.o
+                0x0000000020003010       0x40 ./main.o
+                0x0000000020003010                UARTbuffer
  .data.auxHfrcoFreq
                 0x0000000020003050        0x4 ./emlib/em_cmu.o
  *fill*         0x0000000020003054        0x4 
@@ -1130,7 +1141,7 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
                 0x0000000020003490                . = ALIGN (0x4)
                 0x0000000020003490                __data_end__ = .
 
-.bss            0x0000000020003490      0x1e8 load address 0x0000000000023314
+.bss            0x0000000020003490      0x238 load address 0x00000000000233c0
                 0x0000000020003490                . = ALIGN (0x4)
                 0x0000000020003490                __bss_start__ = .
  *(.bss*)
@@ -1157,40 +1168,49 @@ LOAD /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/g
  .bss.bg_gattdb_data_attribute_field_28_data
                 0x00000000200034c0        0x2 ./gatt_db.o
                 0x00000000200034c0                bg_gattdb_data_attribute_field_28_data
+ *fill*         0x00000000200034c2        0x2 
+ .bss.UARTbuffer
+                0x00000000200034c4       0x40 ./peripherals.o
  .bss.UARTbufferctr
-                0x00000000200034c2        0x1 ./peripherals.o
- *fill*         0x00000000200034c3        0x1 
- .bss.leuartif  0x00000000200034c4        0x4 ./peripherals.o
+                0x0000000020003504        0x1 ./peripherals.o
+ *fill*         0x0000000020003505        0x3 
+ .bss.leuartif  0x0000000020003508        0x4 ./peripherals.o
+ .bss.desiredDutyCycle
+                0x000000002000350c        0x4 ./peripherals.o
  .bss.SOFReceived
-                0x00000000200034c8        0x4 ./peripherals.o
-                0x00000000200034c8                SOFReceived
- .bss.chTable   0x00000000200034cc       0xa0 ./bgapi/dmadrv.o
- .bss.dmaXfer   0x000000002000356c      0x100 ./bgapi/dmadrv.o
+                0x0000000020003510        0x4 ./peripherals.o
+                0x0000000020003510                SOFReceived
+ .bss.chTable   0x0000000020003514       0xa0 ./bgapi/dmadrv.o
+ .bss.dmaXfer   0x00000000200035b4      0x100 ./bgapi/dmadrv.o
  .bss.dcdcEm01LoadCurrent_mA
-                0x000000002000366c        0x2 ./emlib/em_emu.o
+                0x00000000200036b4        0x2 ./emlib/em_emu.o
  .bss.dcdcReverseCurrentControl
-                0x000000002000366e        0x2 ./emlib/em_emu.o
+                0x00000000200036b6        0x2 ./emlib/em_emu.o
  .bss.dcdcMaxCurrent_mA
-                0x0000000020003670        0x2 ./emlib/em_emu.o
- *fill*         0x0000000020003672        0x2 
+                0x00000000200036b8        0x2 ./emlib/em_emu.o
+ *fill*         0x00000000200036ba        0x2 
  .bss.errataFixDcdcHsState
-                0x0000000020003674        0x4 ./emlib/em_emu.o
+                0x00000000200036bc        0x4 ./emlib/em_emu.o
  *(COMMON)
-                0x0000000020003678                . = ALIGN (0x4)
-                0x0000000020003678                __bss_end__ = .
+ COMMON         0x00000000200036c0        0x5 ./peripherals.o
+                0x00000000200036c0                UARTObj
+                0x00000000200036c4                PWMObj
+                0x00000000200036c8                . = ALIGN (0x4)
+ *fill*         0x00000000200036c5        0x3 
+                0x00000000200036c8                __bss_end__ = .
 
-.heap           0x0000000020003678      0xc00
-                0x0000000020003678                __HeapBase = .
-                0x0000000020003678                __end__ = .
-                0x0000000020003678                end = __end__
-                0x0000000020003678                _end = __end__
+.heap           0x00000000200036c8      0xc00
+                0x00000000200036c8                __HeapBase = .
+                0x00000000200036c8                __end__ = .
+                0x00000000200036c8                end = __end__
+                0x00000000200036c8                _end = __end__
  *(.heap*)
- .heap          0x0000000020003678      0xc00 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
-                0x0000000020004278                __HeapLimit = .
+ .heap          0x00000000200036c8      0xc00 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+                0x00000000200042c8                __HeapLimit = .
 
-.stack_dummy    0x0000000020004278      0x400
+.stack_dummy    0x00000000200042c8      0x400
  *(.stack*)
- .stack         0x0000000020004278      0x400 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .stack         0x00000000200042c8      0x400 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
                 0x0000000020007bfc                __StackTop = (ORIGIN (RAM) + 0x4bfc)
                 0x00000000200077fc                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
                 0x0000000020007bfc                PROVIDE (__stack, __StackTop)
@@ -1274,51 +1294,51 @@ OUTPUT(Locoroll-2.axf elf32-littlearm)
  .comment       0x0000000000000000       0x71 ./emlib/em_system.o
  .comment       0x0000000000000000       0x71 ./src/InitDevice.o
 
-.debug_info     0x0000000000000000    0x15617
+.debug_info     0x0000000000000000    0x157f3
  .debug_info    0x0000000000000000      0x98e ./em_timer.o
  .debug_info    0x000000000000098e      0x6a5 ./gatt_db.o
- .debug_info    0x0000000000001033     0x48e9 ./main.o
- .debug_info    0x000000000000591c     0x4953 ./peripherals.o
- .debug_info    0x000000000000a26f     0x1851 ./bgapi/dmadrv.o
- .debug_info    0x000000000000bac0      0xa62 ./bgapi/em_leuart.o
- .debug_info    0x000000000000c522      0x1c0 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_info    0x000000000000c6e2     0x31e1 ./emlib/em_cmu.o
- .debug_info    0x000000000000f8c3     0x27a6 ./emlib/em_emu.o
- .debug_info    0x0000000000012069      0xebd ./emlib/em_gpio.o
- .debug_info    0x0000000000012f26      0x6ec ./emlib/em_rtcc.o
- .debug_info    0x0000000000013612      0x26d ./emlib/em_system.o
- .debug_info    0x000000000001387f     0x1d98 ./src/InitDevice.o
+ .debug_info    0x0000000000001033     0x493b ./main.o
+ .debug_info    0x000000000000596e     0x4add ./peripherals.o
+ .debug_info    0x000000000000a44b     0x1851 ./bgapi/dmadrv.o
+ .debug_info    0x000000000000bc9c      0xa62 ./bgapi/em_leuart.o
+ .debug_info    0x000000000000c6fe      0x1c0 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_info    0x000000000000c8be     0x31e1 ./emlib/em_cmu.o
+ .debug_info    0x000000000000fa9f     0x27a6 ./emlib/em_emu.o
+ .debug_info    0x0000000000012245      0xebd ./emlib/em_gpio.o
+ .debug_info    0x0000000000013102      0x6ec ./emlib/em_rtcc.o
+ .debug_info    0x00000000000137ee      0x26d ./emlib/em_system.o
+ .debug_info    0x0000000000013a5b     0x1d98 ./src/InitDevice.o
 
-.debug_abbrev   0x0000000000000000     0x21af
+.debug_abbrev   0x0000000000000000     0x2259
  .debug_abbrev  0x0000000000000000      0x1ca ./em_timer.o
  .debug_abbrev  0x00000000000001ca       0xce ./gatt_db.o
- .debug_abbrev  0x0000000000000298      0x254 ./main.o
- .debug_abbrev  0x00000000000004ec      0x379 ./peripherals.o
- .debug_abbrev  0x0000000000000865      0x38f ./bgapi/dmadrv.o
- .debug_abbrev  0x0000000000000bf4      0x2e6 ./bgapi/em_leuart.o
- .debug_abbrev  0x0000000000000eda      0x104 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_abbrev  0x0000000000000fde      0x478 ./emlib/em_cmu.o
- .debug_abbrev  0x0000000000001456      0x4a3 ./emlib/em_emu.o
- .debug_abbrev  0x00000000000018f9      0x2d4 ./emlib/em_gpio.o
- .debug_abbrev  0x0000000000001bcd      0x1e2 ./emlib/em_rtcc.o
- .debug_abbrev  0x0000000000001daf      0x109 ./emlib/em_system.o
- .debug_abbrev  0x0000000000001eb8      0x2f7 ./src/InitDevice.o
+ .debug_abbrev  0x0000000000000298      0x23e ./main.o
+ .debug_abbrev  0x00000000000004d6      0x439 ./peripherals.o
+ .debug_abbrev  0x000000000000090f      0x38f ./bgapi/dmadrv.o
+ .debug_abbrev  0x0000000000000c9e      0x2e6 ./bgapi/em_leuart.o
+ .debug_abbrev  0x0000000000000f84      0x104 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_abbrev  0x0000000000001088      0x478 ./emlib/em_cmu.o
+ .debug_abbrev  0x0000000000001500      0x4a3 ./emlib/em_emu.o
+ .debug_abbrev  0x00000000000019a3      0x2d4 ./emlib/em_gpio.o
+ .debug_abbrev  0x0000000000001c77      0x1e2 ./emlib/em_rtcc.o
+ .debug_abbrev  0x0000000000001e59      0x109 ./emlib/em_system.o
+ .debug_abbrev  0x0000000000001f62      0x2f7 ./src/InitDevice.o
 
-.debug_loc      0x0000000000000000     0x6509
+.debug_loc      0x0000000000000000     0x6541
  .debug_loc     0x0000000000000000      0x18c ./em_timer.o
  .debug_loc     0x000000000000018c       0x56 ./main.o
- .debug_loc     0x00000000000001e2      0x2a7 ./peripherals.o
- .debug_loc     0x0000000000000489     0x10da ./bgapi/dmadrv.o
- .debug_loc     0x0000000000001563      0x46f ./bgapi/em_leuart.o
- .debug_loc     0x00000000000019d2       0x4b ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_loc     0x0000000000001a1d     0x27cc ./emlib/em_cmu.o
- .debug_loc     0x00000000000041e9     0x185c ./emlib/em_emu.o
- .debug_loc     0x0000000000005a45      0x798 ./emlib/em_gpio.o
- .debug_loc     0x00000000000061dd       0xdc ./emlib/em_rtcc.o
- .debug_loc     0x00000000000062b9       0x91 ./emlib/em_system.o
- .debug_loc     0x000000000000634a      0x1bf ./src/InitDevice.o
+ .debug_loc     0x00000000000001e2      0x2df ./peripherals.o
+ .debug_loc     0x00000000000004c1     0x10da ./bgapi/dmadrv.o
+ .debug_loc     0x000000000000159b      0x46f ./bgapi/em_leuart.o
+ .debug_loc     0x0000000000001a0a       0x4b ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_loc     0x0000000000001a55     0x27cc ./emlib/em_cmu.o
+ .debug_loc     0x0000000000004221     0x185c ./emlib/em_emu.o
+ .debug_loc     0x0000000000005a7d      0x798 ./emlib/em_gpio.o
+ .debug_loc     0x0000000000006215       0xdc ./emlib/em_rtcc.o
+ .debug_loc     0x00000000000062f1       0x91 ./emlib/em_system.o
+ .debug_loc     0x0000000000006382      0x1bf ./src/InitDevice.o
 
-.debug_aranges  0x0000000000000000      0x598
+.debug_aranges  0x0000000000000000      0x5b0
  .debug_aranges
                 0x0000000000000000       0x38 ./em_timer.o
  .debug_aranges
@@ -1326,101 +1346,101 @@ OUTPUT(Locoroll-2.axf elf32-littlearm)
  .debug_aranges
                 0x0000000000000050       0x20 ./main.o
  .debug_aranges
-                0x0000000000000070       0x58 ./peripherals.o
+                0x0000000000000070       0x70 ./peripherals.o
  .debug_aranges
-                0x00000000000000c8       0xa0 ./bgapi/dmadrv.o
+                0x00000000000000e0       0xa0 ./bgapi/dmadrv.o
  .debug_aranges
-                0x0000000000000168       0x80 ./bgapi/em_leuart.o
+                0x0000000000000180       0x80 ./bgapi/em_leuart.o
  .debug_aranges
-                0x00000000000001e8       0x28 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+                0x0000000000000200       0x28 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
  .debug_aranges
-                0x0000000000000210      0x110 ./emlib/em_cmu.o
+                0x0000000000000228      0x110 ./emlib/em_cmu.o
  .debug_aranges
-                0x0000000000000320       0xf8 ./emlib/em_emu.o
+                0x0000000000000338       0xf8 ./emlib/em_emu.o
  .debug_aranges
-                0x0000000000000418       0x48 ./emlib/em_gpio.o
+                0x0000000000000430       0x48 ./emlib/em_gpio.o
  .debug_aranges
-                0x0000000000000460       0x40 ./emlib/em_rtcc.o
+                0x0000000000000478       0x40 ./emlib/em_rtcc.o
  .debug_aranges
-                0x00000000000004a0       0x28 ./emlib/em_system.o
+                0x00000000000004b8       0x28 ./emlib/em_system.o
  .debug_aranges
-                0x00000000000004c8       0xd0 ./src/InitDevice.o
+                0x00000000000004e0       0xd0 ./src/InitDevice.o
 
-.debug_ranges   0x0000000000000000     0x1278
+.debug_ranges   0x0000000000000000     0x12c0
  .debug_ranges  0x0000000000000000       0x60 ./em_timer.o
  .debug_ranges  0x0000000000000060       0x10 ./main.o
- .debug_ranges  0x0000000000000070       0xa8 ./peripherals.o
- .debug_ranges  0x0000000000000118       0xa8 ./bgapi/dmadrv.o
- .debug_ranges  0x00000000000001c0      0x120 ./bgapi/em_leuart.o
- .debug_ranges  0x00000000000002e0       0x18 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_ranges  0x00000000000002f8      0x8b8 ./emlib/em_cmu.o
- .debug_ranges  0x0000000000000bb0      0x3c8 ./emlib/em_emu.o
- .debug_ranges  0x0000000000000f78      0x180 ./emlib/em_gpio.o
- .debug_ranges  0x00000000000010f8       0x70 ./emlib/em_rtcc.o
- .debug_ranges  0x0000000000001168       0x18 ./emlib/em_system.o
- .debug_ranges  0x0000000000001180       0xf8 ./src/InitDevice.o
+ .debug_ranges  0x0000000000000070       0xf0 ./peripherals.o
+ .debug_ranges  0x0000000000000160       0xa8 ./bgapi/dmadrv.o
+ .debug_ranges  0x0000000000000208      0x120 ./bgapi/em_leuart.o
+ .debug_ranges  0x0000000000000328       0x18 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_ranges  0x0000000000000340      0x8b8 ./emlib/em_cmu.o
+ .debug_ranges  0x0000000000000bf8      0x3c8 ./emlib/em_emu.o
+ .debug_ranges  0x0000000000000fc0      0x180 ./emlib/em_gpio.o
+ .debug_ranges  0x0000000000001140       0x70 ./emlib/em_rtcc.o
+ .debug_ranges  0x00000000000011b0       0x18 ./emlib/em_system.o
+ .debug_ranges  0x00000000000011c8       0xf8 ./src/InitDevice.o
 
-.debug_line     0x0000000000000000     0x4a0e
+.debug_line     0x0000000000000000     0x4a8d
  .debug_line    0x0000000000000000      0x4ac ./em_timer.o
  .debug_line    0x00000000000004ac      0x1d9 ./gatt_db.o
- .debug_line    0x0000000000000685      0x4d3 ./main.o
- .debug_line    0x0000000000000b58      0x5c9 ./peripherals.o
- .debug_line    0x0000000000001121      0x70f ./bgapi/dmadrv.o
- .debug_line    0x0000000000001830      0x532 ./bgapi/em_leuart.o
- .debug_line    0x0000000000001d62      0x1fe ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_line    0x0000000000001f60      0xd7e ./emlib/em_cmu.o
- .debug_line    0x0000000000002cde      0xa59 ./emlib/em_emu.o
- .debug_line    0x0000000000003737      0x4e8 ./emlib/em_gpio.o
- .debug_line    0x0000000000003c1f      0x45e ./emlib/em_rtcc.o
- .debug_line    0x000000000000407d      0x37f ./emlib/em_system.o
- .debug_line    0x00000000000043fc      0x612 ./src/InitDevice.o
+ .debug_line    0x0000000000000685      0x4d6 ./main.o
+ .debug_line    0x0000000000000b5b      0x645 ./peripherals.o
+ .debug_line    0x00000000000011a0      0x70f ./bgapi/dmadrv.o
+ .debug_line    0x00000000000018af      0x532 ./bgapi/em_leuart.o
+ .debug_line    0x0000000000001de1      0x1fe ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_line    0x0000000000001fdf      0xd7e ./emlib/em_cmu.o
+ .debug_line    0x0000000000002d5d      0xa59 ./emlib/em_emu.o
+ .debug_line    0x00000000000037b6      0x4e8 ./emlib/em_gpio.o
+ .debug_line    0x0000000000003c9e      0x45e ./emlib/em_rtcc.o
+ .debug_line    0x00000000000040fc      0x37f ./emlib/em_system.o
+ .debug_line    0x000000000000447b      0x612 ./src/InitDevice.o
 
-.debug_str      0x0000000000000000     0xb434
+.debug_str      0x0000000000000000     0xb4a4
  .debug_str     0x0000000000000000      0x975 ./em_timer.o
                                         0x9e3 (size before relaxing)
  .debug_str     0x0000000000000975      0x7e1 ./gatt_db.o
                                         0x97d (size before relaxing)
- .debug_str     0x0000000000001156     0x6054 ./main.o
-                                       0x65f5 (size before relaxing)
- .debug_str     0x00000000000071aa      0x631 ./peripherals.o
-                                       0x56df (size before relaxing)
- .debug_str     0x00000000000077db      0xf37 ./bgapi/dmadrv.o
+ .debug_str     0x0000000000001156     0x6052 ./main.o
+                                       0x6602 (size before relaxing)
+ .debug_str     0x00000000000071a8      0x6a3 ./peripherals.o
+                                       0x576c (size before relaxing)
+ .debug_str     0x000000000000784b      0xf37 ./bgapi/dmadrv.o
                                        0x117c (size before relaxing)
- .debug_str     0x0000000000008712      0x16e ./bgapi/em_leuart.o
+ .debug_str     0x0000000000008782      0x16e ./bgapi/em_leuart.o
                                         0x738 (size before relaxing)
- .debug_str     0x0000000000008880      0x105 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_str     0x00000000000088f0      0x105 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
                                         0x2ba (size before relaxing)
- .debug_str     0x0000000000008985      0xf36 ./emlib/em_cmu.o
+ .debug_str     0x00000000000089f5      0xf36 ./emlib/em_cmu.o
                                        0x13e3 (size before relaxing)
- .debug_str     0x00000000000098bb      0xe8b ./emlib/em_emu.o
+ .debug_str     0x000000000000992b      0xe8b ./emlib/em_emu.o
                                        0x1859 (size before relaxing)
- .debug_str     0x000000000000a746      0x270 ./emlib/em_gpio.o
+ .debug_str     0x000000000000a7b6      0x270 ./emlib/em_gpio.o
                                         0x840 (size before relaxing)
- .debug_str     0x000000000000a9b6      0x5d6 ./emlib/em_rtcc.o
+ .debug_str     0x000000000000aa26      0x5d6 ./emlib/em_rtcc.o
                                         0x808 (size before relaxing)
- .debug_str     0x000000000000af8c       0xff ./emlib/em_system.o
+ .debug_str     0x000000000000affc       0xff ./emlib/em_system.o
                                         0x30d (size before relaxing)
- .debug_str     0x000000000000b08b      0x3a9 ./src/InitDevice.o
+ .debug_str     0x000000000000b0fb      0x3a9 ./src/InitDevice.o
                                        0x185b (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x1008
+.debug_frame    0x0000000000000000     0x1040
  .debug_frame   0x0000000000000000       0xb0 ./em_timer.o
  .debug_frame   0x00000000000000b0       0x28 ./main.o
- .debug_frame   0x00000000000000d8       0xe8 ./peripherals.o
- .debug_frame   0x00000000000001c0      0x22c ./bgapi/dmadrv.o
- .debug_frame   0x00000000000003ec      0x11c ./bgapi/em_leuart.o
- .debug_frame   0x0000000000000508       0x38 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
- .debug_frame   0x0000000000000540      0x2fc ./emlib/em_cmu.o
- .debug_frame   0x000000000000083c      0x304 ./emlib/em_emu.o
- .debug_frame   0x0000000000000b40       0xa0 ./emlib/em_gpio.o
- .debug_frame   0x0000000000000be0       0x8c ./emlib/em_rtcc.o
- .debug_frame   0x0000000000000c6c       0x30 ./emlib/em_system.o
- .debug_frame   0x0000000000000c9c      0x1ec ./src/InitDevice.o
- .debug_frame   0x0000000000000e88       0x28 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-exit.o)
- .debug_frame   0x0000000000000eb0       0x2c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-init.o)
- .debug_frame   0x0000000000000edc       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-memset.o)
- .debug_frame   0x0000000000000f10       0x50 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
- .debug_frame   0x0000000000000f60       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-atexit.o)
- .debug_frame   0x0000000000000f80       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-fini.o)
- .debug_frame   0x0000000000000fb4       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__atexit.o)
- .debug_frame   0x0000000000000fe8       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libnosys.a(_exit.o)
+ .debug_frame   0x00000000000000d8      0x120 ./peripherals.o
+ .debug_frame   0x00000000000001f8      0x22c ./bgapi/dmadrv.o
+ .debug_frame   0x0000000000000424      0x11c ./bgapi/em_leuart.o
+ .debug_frame   0x0000000000000540       0x38 ./device/EFR32_B_1_1_B/gcc/startup_efr32bg1b.o
+ .debug_frame   0x0000000000000578      0x2fc ./emlib/em_cmu.o
+ .debug_frame   0x0000000000000874      0x304 ./emlib/em_emu.o
+ .debug_frame   0x0000000000000b78       0xa0 ./emlib/em_gpio.o
+ .debug_frame   0x0000000000000c18       0x8c ./emlib/em_rtcc.o
+ .debug_frame   0x0000000000000ca4       0x30 ./emlib/em_system.o
+ .debug_frame   0x0000000000000cd4      0x1ec ./src/InitDevice.o
+ .debug_frame   0x0000000000000ec0       0x28 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000ee8       0x2c /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-init.o)
+ .debug_frame   0x0000000000000f14       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-memset.o)
+ .debug_frame   0x0000000000000f48       0x50 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x0000000000000f98       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-atexit.o)
+ .debug_frame   0x0000000000000fb8       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-fini.o)
+ .debug_frame   0x0000000000000fec       0x34 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libc.a(lib_a-__atexit.o)
+ .debug_frame   0x0000000000001020       0x20 /Applications/Simplicity Studio.app/Contents/Eclipse/developer/toolchains/gnu_arm/4.9_2015q3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp/libnosys.a(_exit.o)

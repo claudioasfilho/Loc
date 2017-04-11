@@ -88,7 +88,7 @@ static const gecko_configuration_t config = {
 /* Flag for indicating DFU Reset must be performed */
 uint8_t boot_to_dfu = 0;
 
-
+uint8_t UARTbuffer[UARTBUFFERSIZE]= "UART test 123 hhh\n\r";
 
 /**
  * @brief  Main function
@@ -109,8 +109,8 @@ int main(void)
 
   InitPWM1();
   InitLEUART0();
-  UpdatePWM1(85);
-  ClearSOFReceived();
+  UpdatePWM1(15);
+ // ClearSOFReceived();
 
 
 #ifndef TESTING
@@ -118,8 +118,11 @@ int main(void)
 
   while (1)
   {
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
 	  UART_TXHandler();
 	  UART_RXHandler();
+	  PWMHandler();
+
 	  for (int counterr=0; counterr<0x3fff; counterr++);
 
 	// UART_Tx(&UARTbuffer, 19);

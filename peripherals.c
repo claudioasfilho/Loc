@@ -18,11 +18,16 @@
 #include "peripherals.h"
 #include "em_usart.h"
 #include "em_leuart.h"
+#include <string.h>
+
+OBJFLAGS PWMObj;
+OBJFLAGS UARTObj;
 
 /**************************************************************************//**
  * @brief PWM Related Functions  and variables
  *
  *****************************************************************************/
+static uint32_t desiredDutyCycle;
 
 void InitPWM1()
 {
@@ -81,10 +86,18 @@ void InitPWM1()
 	//PWM Output - PIN P7 on WSTK
 	GPIO_PinModeSet (gpioPortC, 9, gpioModePushPull, 0);
 
+	PWMObj.all=0;
+	PWMObj.bits.Enabled=1;
+
 }
 
+void UpdatePWM1(uint32_t DutyCycle) //desiredDutyCycle varies from 0-100;
+{
+	desiredDutyCycle = DutyCycle;
+	PWMObj.bits.Status=1;
+}
 
-void UpdatePWM1(uint32_t desiredDutyCycle) //desiredDutyCycle varies from 0-100;
+void ChangePWMoutput() //desiredDutyCycle varies from 0-100;
 {
 	uint32_t PWMFrequency;
 	uint32_t CC1DutyCycle;
@@ -115,6 +128,17 @@ void UpdatePWM1(uint32_t desiredDutyCycle) //desiredDutyCycle varies from 0-100;
 
 }
 
+void PWMHandler(void)
+{
+	if( (PWMObj.bits.Enabled==1) && (PWMObj.bits.Status==1))
+	{
+		ChangePWMoutput();
+		PWMObj.bits.Status=0;
+	}
+
+}
+
+
 /**************************************************************************//**
  * @brief UART Related Functions and variables
  *
@@ -125,7 +149,7 @@ void UpdatePWM1(uint32_t desiredDutyCycle) //desiredDutyCycle varies from 0-100;
 
 
 static uint32_t leuartif;
-static uint8_t UARTbuffer[UARTBUFFERSIZE]= "UART test 123 hhh\n\r";
+static uint8_t UARTbuffer[UARTBUFFERSIZE];
 static uint8_t UARTbufferctr;
 
 
@@ -192,6 +216,12 @@ void InitLEUART0(void) {
 
 	// [LEUART0 initialization]$
 
+	  	ClearSOFReceived();
+		UARTObj.all=0;
+		UARTObj.bits.Enabled=1;
+
+
+
 }
 
 void UART_Tx(uint8_t * buffer, uint16_t size)
@@ -200,8 +230,23 @@ void UART_Tx(uint8_t * buffer, uint16_t size)
 
 	for(counter=0; counter<size; counter++)
 	{
+		UARTbuffer[counter] = * buffer++;
+	}
+
+	UARTObj.bits.TXready=1;
+
+}
+
+
+
+void UART_TxOut(uint8_t * buffer, uint16_t size)
+{
+	uint16_t counter;
+
+	for(counter=0; counter<size; counter++)
+	{
 		LEUART_Tx(LEUART0, *buffer++);
-	//	UART0_Tx (LEUART0, *buffer++);
+
 	}
 
 }
@@ -256,36 +301,41 @@ void ClearSOFReceived()
 
 void UART_TXHandler(void)
 {
-
-	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
-
+	if(UARTObj.bits.Enabled==1)
+	{
+		if(UARTObj.bits.TXready==1)
+		{
+			UART_TxOut((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+			UARTObj.bits.TXready=0;
+		}
+	}
 }
 
 
 void UART_RXHandler(void)
 {
 
+	if(UARTObj.bits.Enabled==1)
+	{
+		  if((LEUART0->IF & 0x200) ==0x200)
+		  {
+			  UARTbufferctr=0;
+			  LEUART_IntClear(LEUART0, 0x200);
+			  UARTbuffer[UARTbufferctr++] = LEUART0->RXDATA;
+
+			  SOFReceived =1;
 
 
-	  if((LEUART0->IF & 0x200) ==0x200)
-	  {
-		  UARTbufferctr=0;
-		  LEUART_IntClear(LEUART0, 0x200);
-		  UARTbuffer[UARTbufferctr++] = LEUART0->RXDATA;
+		  }
 
-		  SOFReceived =1;
+		  if (((LEUART0->IF & 0x4) ==0x4) && (SOFReceived==1))
+		  {
+			  UARTbuffer[UARTbufferctr] = LEUART0->RXDATA;
+			  LEUART_Tx(LEUART0, UARTbuffer[UARTbufferctr]);
+			  if((UARTbuffer[UARTbufferctr]=='\r') || (UARTbufferctr++==63)) SOFReceived =0;
 
-
-	  }
-
-	  if (((LEUART0->IF & 0x4) ==0x4) && (SOFReceived==1))
-			  {
-				  UARTbuffer[UARTbufferctr] = LEUART0->RXDATA;
-				  LEUART_Tx(LEUART0, UARTbuffer[UARTbufferctr]);
-				  if((UARTbuffer[UARTbufferctr]=='\r') || (UARTbufferctr++==63)) SOFReceived =0;
-
-			  }
-
+		  }
+	}
 
 }
 
