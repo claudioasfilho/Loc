@@ -232,7 +232,7 @@ int main(void)
 
         	UpdatePWM1(localPWM);
 
-        //	 gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+        	 gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
 
         }
 

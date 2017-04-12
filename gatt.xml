@@ -85,7 +85,7 @@
       <characteristic id="xgatt_gpio_PWM1" name="PWM1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
         <informativeText/>
         <value length="1" type="user" variable_length="false"/>
-        <properties write_no_response="true" write_no_response_requirement="optional"/>
+        <properties write="true" write_requirement="optional"/>
       </characteristic>
     </service>
     
