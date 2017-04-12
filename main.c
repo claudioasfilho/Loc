@@ -109,7 +109,7 @@ int main(void)
   /* Initialize peripherals */
   enter_DefaultMode_from_RESET();
 
-  sprintf((char *)UARTbuffer, "Uart test 123    \n\r");
+ // sprintf((char *)UARTbuffer, "Uart test 123    \n\r");
 
   InitPWM1();
   InitLEUART0();
@@ -179,13 +179,12 @@ int main(void)
 
 
       case gecko_evt_hardware_soft_timer_id:
-#if 1
-    	  UART_Tx((uint8_t *)UARTbuffer, 15);
+
+
     	  UART_TXHandler();
     	  UART_RXHandler();
     	  PWMHandler();
     	  GPIOHandler();
-#endif
 
     	  break;
 
@@ -202,8 +201,44 @@ int main(void)
       break;
 
 
+      case gecko_evt_gatt_server_user_read_request_id:
 
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_pb0 )
+          {
+        	  uint8_t temp;
+        	  temp = GetPB0();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_pb0,0,1, &temp);
+          }
 
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_pb1 )
+          {
+        	  uint8_t temp;
+        	  temp = GetPB1();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_pb1,0,1, &temp);
+          }
+
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_led0 )
+          {
+        	  uint8_t temp;
+        	  temp = GetLED0();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_led0,0,1, &temp);
+          }
+
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_led1 )
+          {
+        	  uint8_t temp;
+        	  temp = GetLED1();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_led1,0,1, &temp);
+          }
+
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_PWM1 )
+          {
+        	  uint8_t temp;
+        	  temp = GetPWM1();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_PWM1,0,1, &temp);
+          }
+
+        break;
 
       case gecko_evt_gatt_server_user_write_request_id:
       
@@ -217,7 +252,7 @@ int main(void)
         	UpdatePWM1(localPWM);
 
         	//Response Back to the BLE client saying the data was received
-        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_PWM1,bg_err_success);
 
         }
 
@@ -225,11 +260,20 @@ int main(void)
               {
 
 
-              	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0) ClearLED0();
-              	else SetLED0();
+              	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)
+          		{
+          			ClearLED0();
+          			LED0offUARTmessage();
+          		}
+              	else
+          		{
+          			SetLED0();
+          			LED0onUARTmessage();
+          		}
 
               	//Response Back to the BLE client saying the data was received
-              	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+              	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led0,bg_err_success);
+
 
               }
 
@@ -237,11 +281,19 @@ int main(void)
         {
 
 
-        	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0) ClearLED1();
-        	else SetLED1();
+        	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)           		{
+      			ClearLED1();
+      			LED1offUARTmessage();
+      		}
+          	else
+      		{
+      			SetLED1();
+      			LED1onUARTmessage();
+      		}
+
 
         	//Response Back to the BLE client saying the data was received
-        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led1,bg_err_success);
 
         }
 

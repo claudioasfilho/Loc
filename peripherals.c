@@ -19,6 +19,7 @@
 #include "em_usart.h"
 #include "em_leuart.h"
 #include <string.h>
+#include <stdio.h>
 
 OBJFLAGS PWMObj;
 OBJFLAGS UARTObj;
@@ -101,6 +102,11 @@ void ToogleLED0(void)
 {
 	UserGPIOs.bits.LED0^=1;
 }
+uint8_t GetLED0()
+{
+	return UserGPIOs.bits.LED0;
+}
+
 
 void SetLED1(void)
 {
@@ -115,7 +121,20 @@ void ToogleLED1(void)
 	UserGPIOs.bits.LED1^=1;
 }
 
+uint8_t GetLED1()
+{
+	return UserGPIOs.bits.LED1;
+}
 
+uint8_t GetPB0()
+{
+	return UserGPIOs.bits.PB0;
+}
+
+uint8_t GetPB1()
+{
+	return UserGPIOs.bits.PB1;
+}
 
 void GPIOHandler(void)
 {
@@ -143,7 +162,7 @@ void GPIOHandler(void)
  * @brief PWM Related Functions  and variables
  *
  *****************************************************************************/
-static uint32_t desiredDutyCycle;
+static uint8_t desiredDutyCycle;
 
 void InitPWM1()
 {
@@ -207,7 +226,7 @@ void InitPWM1()
 
 }
 
-void UpdatePWM1(uint32_t DutyCycle) //desiredDutyCycle varies from 0-100;
+void UpdatePWM1(uint8_t DutyCycle) //desiredDutyCycle varies from 0-100;
 {
 	desiredDutyCycle = DutyCycle;
 	PWMObj.bits.Status=1;
@@ -256,6 +275,10 @@ void PWMHandler(void)
 
 }
 
+uint8_t GetPWM1()
+{
+	return desiredDutyCycle;
+}
 
 /**************************************************************************//**
  * @brief UART Related Functions and variables
@@ -456,6 +479,29 @@ void UART_RXHandler(void)
 
 }
 
+void LED0onUARTmessage(void)
+{
+	  sprintf((char *)UARTbuffer, "LED0 On\n\r");
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+}
+
+void LED0offUARTmessage(void)
+{
+	  sprintf((char *)UARTbuffer, "LED0 Off\n\r");
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+}
+
+void LED1onUARTmessage(void)
+{
+	  sprintf((char *)UARTbuffer, "LED1 On\n\r");
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+}
+
+void LED1offUARTmessage(void)
+{
+	  sprintf((char *)UARTbuffer, "LED1 Off\n\r");
+	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+}
 
 
 

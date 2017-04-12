@@ -85,28 +85,28 @@ PATH(PROJECT_RELATIVE):main.c
       <informativeText/>
       <characteristic id="xgatt_gpio_pb0" name="GPIO_PB0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
         <informativeText/>
-        <value length="1" type="hex" variable_length="false">0</value>
-        <properties indicate="false" indicate_requirement="excluded" notify="true" notify_requirement="mandatory" read="true" read_requirement="mandatory" write="false" write_no_response="false" write_no_response_requirement="excluded" write_requirement="excluded"/>
+        <value length="1" type="user" variable_length="false">0</value>
+        <properties read="true" read_requirement="optional"/>
       </characteristic>
       <characteristic id="xgatt_gpio_pb1" name="GPIO_PB1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="0be6e7f0-83de-46bb-bd63-667e9c857bc1">
         <informativeText/>
-        <value length="1" type="hex" variable_length="false">0</value>
-        <properties indicate="false" indicate_requirement="excluded" notify="true" notify_requirement="mandatory" read="true" read_requirement="mandatory" write="false" write_no_response="false" write_no_response_requirement="excluded" write_requirement="excluded"/>
+        <value length="1" type="user" variable_length="false">0</value>
+        <properties read="true" read_requirement="optional"/>
       </characteristic>
       <characteristic id="xgatt_gpio_led0" name="GPIO_LED0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b663d28a-aeb5-4456-8d7d-91a6dbcd6bcb">
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
-        <properties write="true" write_requirement="optional"/>
+        <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
       </characteristic>
       <characteristic id="xgatt_gpio_led1" name="GPIO_LED1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
-        <properties write="true" write_requirement="optional"/>
+        <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
       </characteristic>
       <characteristic id="xgatt_gpio_PWM1" name="PWM1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
         <informativeText/>
         <value length="1" type="user" variable_length="false"/>
-        <properties write="true" write_requirement="optional"/>
+        <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
       </characteristic>
     </service>
     <service advertise="false" name="Silicon Labs OTA" requirement="mandatory" sourceId="com.silabs.service.ota" type="primary" uuid="1D14D6EE-FD63-4FA1-BFA4-8F47B42119F0">

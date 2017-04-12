@@ -79,18 +79,29 @@ extern uint8_t UARTbuffer[UARTBUFFERSIZE];
  **************************************************************************************************/
 
 
-void InitPWM1(void);
-void UpdatePWM1(uint32_t DutyCycle);
-void PWMHandler(void);
+void InitGPIO(void);
 void GPIOHandler(void);
+
+
 
 void SetLED0(void);
 void ClearLED0(void);
 void ToogleLED0(void);
+uint8_t GetLED0(void);
 
 void SetLED1(void);
 void ClearLED1(void);
 void ToogleLED1(void);
+uint8_t GetLED1(void);
+
+uint8_t GetPB0();
+uint8_t GetPB1();
+
+void InitPWM1(void);
+void UpdatePWM1(uint8_t DutyCycle);
+void PWMHandler(void);
+uint8_t GetPWM1();
+
 
 void InitLEUART0(void);
 void UART_Tx(uint8_t *buffer, uint16_t size);
@@ -98,7 +109,12 @@ void UART_RXHandler(void);
 void UART_TXHandler(void);
 void ClearSOFReceived();
 
+/*UART Messages*/
 
+void LED0onUARTmessage(void);
+void LED0offUARTmessage(void);
+void LED1onUARTmessage(void);
+void LED1offUARTmessage(void);
 
 #endif /* PERIPHERALS_H_ */
 
