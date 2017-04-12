@@ -112,10 +112,11 @@ int main(void)
 
   InitPWM1();
   InitLEUART0();
+  InitGPIO();
   UpdatePWM1(15);
 
 
-#ifndef TESTING
+#ifdef TESTING
 
 
   while (1)
@@ -126,7 +127,6 @@ int main(void)
 	  PWMHandler();
 	  GPIOHandler();
 	  for (int counterr=0; counterr<0x3fff; counterr++);
-
   }
 
 #endif
@@ -158,6 +158,9 @@ int main(void)
 
         /* Start general advertising and enable connections. */
         gecko_cmd_le_gap_set_mode(le_gap_general_discoverable, le_gap_undirected_connectable);
+
+        gecko_cmd_hardware_set_soft_timer(328,0,0);
+
         break;
 
       case gecko_evt_le_connection_closed_id:
@@ -172,6 +175,18 @@ int main(void)
           gecko_cmd_le_gap_set_mode(le_gap_general_discoverable, le_gap_undirected_connectable);
         }
         break;
+
+
+      case gecko_evt_hardware_soft_timer_id:
+#if 1
+    	 // UART_Tx((uint8_t *)UARTbuffer, 15);
+    	  UART_TXHandler();
+    	  UART_RXHandler();
+    	  PWMHandler();
+    	  GPIOHandler();
+#endif
+
+    	  break;
 
       case gecko_evt_system_external_signal_id:
 
