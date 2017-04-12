@@ -203,26 +203,10 @@ int main(void)
 
 
 
-      /* Events related to OTA upgrading
-      ----------------------------------------------------------------------------- */
 
-      /* Check if the user-type OTA Control Characteristic was written.
-       * If ota_control was written, boot the device into Device Firmware Upgrade (DFU) mode. */
+
       case gecko_evt_gatt_server_user_write_request_id:
       
-        if(evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_ota_control)
-        {
-          /* Set flag to enter to OTA mode */
-          boot_to_dfu = 1; 
-          /* Send response to Write Request */
-          gecko_cmd_gatt_server_send_user_write_response(
-            evt->data.evt_gatt_server_user_write_request.connection, 
-            gattdb_ota_control, 
-            bg_err_success);
-         
-          /* Close connection to enter to DFU OTA mode */        
-          gecko_cmd_endpoint_close(evt->data.evt_gatt_server_user_write_request.connection);
-        }
 
         if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_PWM1)
         {
@@ -232,11 +216,58 @@ int main(void)
 
         	UpdatePWM1(localPWM);
 
-        	 gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+        	//Response Back to the BLE client saying the data was received
+        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
 
         }
 
-        break;
+        if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led0)
+              {
+
+
+              	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0) ClearLED0();
+              	else SetLED0();
+
+              	//Response Back to the BLE client saying the data was received
+              	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+
+              }
+
+        if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led1)
+        {
+
+
+        	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0) ClearLED1();
+        	else SetLED1();
+
+        	//Response Back to the BLE client saying the data was received
+        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
+
+        }
+
+
+		/* Events related to OTA upgrading
+		----------------------------------------------------------------------------- */
+
+		/* Check if the user-type OTA Control Characteristic was written.
+		* If ota_control was written, boot the device into Device Firmware Upgrade (DFU) mode. */
+
+      if(evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_ota_control)
+      {
+        /* Set flag to enter to OTA mode */
+        boot_to_dfu = 1;
+        /* Send response to Write Request */
+        gecko_cmd_gatt_server_send_user_write_response(
+          evt->data.evt_gatt_server_user_write_request.connection,
+          gattdb_ota_control,
+          bg_err_success);
+
+        /* Close connection to enter to DFU OTA mode */
+        gecko_cmd_endpoint_close(evt->data.evt_gatt_server_user_write_request.connection);
+      }
+
+
+      break;		// gecko_evt_gatt_server_user_write_request_id:
 
       default:
         break;

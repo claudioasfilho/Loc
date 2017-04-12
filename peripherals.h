@@ -84,6 +84,13 @@ void UpdatePWM1(uint32_t DutyCycle);
 void PWMHandler(void);
 void GPIOHandler(void);
 
+void SetLED0(void);
+void ClearLED0(void);
+void ToogleLED0(void);
+
+void SetLED1(void);
+void ClearLED1(void);
+void ToogleLED1(void);
 
 void InitLEUART0(void);
 void UART_Tx(uint8_t *buffer, uint16_t size);

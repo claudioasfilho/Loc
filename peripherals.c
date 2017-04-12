@@ -89,6 +89,34 @@ void InitGPIO(void) {
 
 }
 
+void SetLED0(void)
+{
+	UserGPIOs.bits.LED0=1;
+}
+void ClearLED0(void)
+{
+	UserGPIOs.bits.LED0=0;
+}
+void ToogleLED0(void)
+{
+	UserGPIOs.bits.LED0^=1;
+}
+
+void SetLED1(void)
+{
+	UserGPIOs.bits.LED1=1;
+}
+void ClearLED1(void)
+{
+	UserGPIOs.bits.LED1=0;
+}
+void ToogleLED1(void)
+{
+	UserGPIOs.bits.LED1^=1;
+}
+
+
+
 void GPIOHandler(void)
 {
 	if (UserGPIOs.bits.LED0 != GPIO_PinOutGet(gpioPortF, 4))

@@ -70,15 +70,15 @@
       <!--GPIO_LED0-->
       <characteristic id="xgatt_gpio_led0" name="GPIO_LED0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b663d28a-aeb5-4456-8d7d-91a6dbcd6bcb">
         <informativeText/>
-        <value length="1" type="hex" variable_length="false">0</value>
-        <properties indicate="false" indicate_requirement="excluded" notify="false" notify_requirement="excluded" read="false" read_requirement="excluded" write="false" write_no_response="true" write_no_response_requirement="mandatory" write_requirement="excluded"/>
+        <value length="1" type="user" variable_length="false">0</value>
+        <properties write="true" write_requirement="optional"/>
       </characteristic>
       
       <!--GPIO_LED1-->
       <characteristic id="xgatt_gpio_led1" name="GPIO_LED1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
         <informativeText/>
-        <value length="1" type="hex" variable_length="false">0</value>
-        <properties indicate="false" indicate_requirement="excluded" notify="false" notify_requirement="excluded" read="false" read_requirement="excluded" write="false" write_no_response="true" write_no_response_requirement="mandatory" write_requirement="excluded"/>
+        <value length="1" type="user" variable_length="false">0</value>
+        <properties write="true" write_requirement="optional"/>
       </characteristic>
       
       <!--PWM1-->
