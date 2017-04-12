@@ -109,7 +109,7 @@ int main(void)
   /* Initialize peripherals */
   enter_DefaultMode_from_RESET();
 
-  sprintf((char *)UARTbuffer, "UART test 123456789 Complete Sprintf    \n\r");
+  sprintf((char *)UARTbuffer, "Uart test 123    \n\r");
 
   InitPWM1();
   InitLEUART0();
@@ -155,12 +155,12 @@ int main(void)
         /* Set advertising parameters. 100ms advertisement interval. All channels used.
          * The first two parameters are minimum and maximum advertising interval, both in
          * units of (milliseconds * 1.6). The third parameter '7' sets advertising on all channels. */
-        gecko_cmd_le_gap_set_adv_parameters(160,160,7);
+        gecko_cmd_le_gap_set_adv_parameters(960,960,7);
 
         /* Start general advertising and enable connections. */
         gecko_cmd_le_gap_set_mode(le_gap_general_discoverable, le_gap_undirected_connectable);
 
-        gecko_cmd_hardware_set_soft_timer(328,0,0);
+        gecko_cmd_hardware_set_soft_timer(32768,0,0);
 
         break;
 
@@ -180,7 +180,7 @@ int main(void)
 
       case gecko_evt_hardware_soft_timer_id:
 #if 1
-    	 // UART_Tx((uint8_t *)UARTbuffer, 15);
+    	  UART_Tx((uint8_t *)UARTbuffer, 15);
     	  UART_TXHandler();
     	  UART_RXHandler();
     	  PWMHandler();
