@@ -238,10 +238,57 @@ int main(void)
               gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_PWM1,0,1, &temp);
           }
 
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_uart )
+          {
+
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_uart,0,UARTBUFFERSIZE, (uint8_t *)UARTbuffer);
+          }
+
         break;
 
       case gecko_evt_gatt_server_user_write_request_id:
       
+          if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led0)
+  		  {
+
+
+  				if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)
+  				{
+  					ClearLED0();
+  					LED0offUARTmessage();
+  				}
+  				else
+  				{
+  					SetLED0();
+  					LED0onUARTmessage();
+  				}
+
+  				//Response Back to the BLE client saying the data was received
+  				gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led0,bg_err_success);
+
+
+  		  }
+
+          if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led1)
+          {
+
+
+          	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)           		{
+        			ClearLED1();
+        			LED1offUARTmessage();
+        		}
+            	else
+        		{
+        			SetLED1();
+        			LED1onUARTmessage();
+        		}
+
+
+          	//Response Back to the BLE client saying the data was received
+          	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led1,bg_err_success);
+
+          }
+
 
         if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_PWM1)
         {
@@ -256,44 +303,20 @@ int main(void)
 
         }
 
-        if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led0)
-              {
-
-
-              	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)
-          		{
-          			ClearLED0();
-          			LED0offUARTmessage();
-          		}
-              	else
-          		{
-          			SetLED0();
-          			LED0onUARTmessage();
-          		}
-
-              	//Response Back to the BLE client saying the data was received
-              	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led0,bg_err_success);
-
-
-              }
-
-        if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_led1)
+        if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_uart)
         {
 
+        	uint8_t temp;
 
-        	if (evt->data.evt_gatt_server_attribute_value.value.data[0]==0)           		{
-      			ClearLED1();
-      			LED1offUARTmessage();
-      		}
-          	else
-      		{
-      			SetLED1();
-      			LED1onUARTmessage();
-      		}
+        	for (temp=0; temp<UARTBUFFERSIZE; temp++)
+        	{
+        		UARTbuffer[temp] = evt->data.evt_gatt_server_attribute_value.value.data[temp];
+        	}
 
+        	UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
 
         	//Response Back to the BLE client saying the data was received
-        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_led1,bg_err_success);
+        	gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_xgatt_gpio_uart,bg_err_success);
 
         }
 

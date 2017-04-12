@@ -154,7 +154,7 @@
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 	</storageModule>
-	<storageModule moduleId="com.silabs.ss.framework.ide.project.core.cpp" project.generation="186" projectCommon.boardIds="brd4302a:0.0.0" projectCommon.partId="mcu.arm.efr32.bg1.efr32bg1b232f256gm56" projectCommon.sdkId="com.silabs.sdk.stack.super:1.0.0._1914564502"/>
+	<storageModule moduleId="com.silabs.ss.framework.ide.project.core.cpp" project.generation="190" projectCommon.boardIds="brd4302a:0.0.0" projectCommon.partId="mcu.arm.efr32.bg1.efr32bg1b232f256gm56" projectCommon.sdkId="com.silabs.sdk.stack.super:1.0.0._1914564502"/>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="Locoroll-2.com.silabs.ss.framework.ide.project.core.cdt.cdtMbsProjectType.1664986977" name="SLS CDT Project" projectType="com.silabs.ss.framework.ide.project.core.cdt.cdtMbsProjectType"/>
 	</storageModule>
