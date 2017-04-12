@@ -201,6 +201,8 @@ void ChangePWMoutput() //desiredDutyCycle varies from 0-100;
 
 	}
 	else  {CC1DutyCycle=0;}
+	if (desiredDutyCycle>100) CC1DutyCycle=99;
+
 
 	TIMER_Enable(TIMER1,0);	//Disables Timer
 

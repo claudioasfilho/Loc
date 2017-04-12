@@ -89,6 +89,7 @@ static const gecko_configuration_t config = {
 /* Flag for indicating DFU Reset must be performed */
 uint8_t boot_to_dfu = 0;
 
+uint8_t localPWM;
 
 
 /**
@@ -225,11 +226,13 @@ int main(void)
 
         if (evt->data.evt_gatt_server_user_write_request.characteristic==gattdb_xgatt_gpio_PWM1)
         {
-        		if (evt->data.evt_gatt_server_user_write_request.value.data[0] == 1)
-        		{
 
-        		}
 
+        	localPWM = evt->data.evt_gatt_server_attribute_value.value.data[0];
+
+        	UpdatePWM1(localPWM);
+
+        //	 gecko_cmd_gatt_server_send_user_write_response( evt->data.evt_gatt_server_user_write_request.connection,gattdb_ota_control,bg_err_success);
 
         }
 

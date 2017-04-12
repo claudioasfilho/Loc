@@ -28,7 +28,7 @@
 		<link>
 			<name>em_timer.c</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Applications/Simplicity%20Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0/platform/emlib/src/em_timer.c</locationURI>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_timer.c</locationURI>
 		</link>
 		<link>
 			<name>bgapi/dmadrv.c</name>

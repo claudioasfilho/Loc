@@ -49,36 +49,43 @@
       </characteristic>
     </service>
     
-    <!--Generic Attribute-->
-    <service advertise="true" id="generic_attribute" name="Generic Attribute" requirement="mandatory" sourceId="org.bluetooth.service.generic_attribute" type="primary" uuid="97aa8094-1951-11e7-93ae-92361f002671">
+    <!--GPIO_Service-->
+    <service advertise="true" name="GPIO_Service" requirement="mandatory" sourceId="" type="primary" uuid="0e69c97d-e7c1-4854-a7e6-bd7a39468cd1">
       <informativeText/>
       
       <!--GPIO_PB0-->
-      <characteristic id="xgatt_gpio_pb0" name="GPIO_PB0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec2ee-1951-11e7-93ae-92361f002671">
+      <characteristic id="xgatt_gpio_pb0" name="GPIO_PB0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
         <informativeText/>
         <value length="1" type="hex" variable_length="false">0</value>
         <properties indicate="false" indicate_requirement="excluded" notify="true" notify_requirement="mandatory" read="true" read_requirement="mandatory" write="false" write_no_response="false" write_no_response_requirement="excluded" write_requirement="excluded"/>
       </characteristic>
       
       <!--GPIO_PB1-->
-      <characteristic id="xgatt_gpio_pb1" name="GPIO_PB1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec582-1951-11e7-93ae-92361f002671">
+      <characteristic id="xgatt_gpio_pb1" name="GPIO_PB1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="0be6e7f0-83de-46bb-bd63-667e9c857bc1">
         <informativeText/>
         <value length="1" type="hex" variable_length="false">0</value>
         <properties indicate="false" indicate_requirement="excluded" notify="true" notify_requirement="mandatory" read="true" read_requirement="mandatory" write="false" write_no_response="false" write_no_response_requirement="excluded" write_requirement="excluded"/>
       </characteristic>
       
       <!--GPIO_LED0-->
-      <characteristic id="xgatt_gpio_led0" name="GPIO_LED0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec794-1951-11e7-93ae-92361f002671">
+      <characteristic id="xgatt_gpio_led0" name="GPIO_LED0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b663d28a-aeb5-4456-8d7d-91a6dbcd6bcb">
         <informativeText/>
         <value length="1" type="hex" variable_length="false">0</value>
         <properties indicate="false" indicate_requirement="excluded" notify="false" notify_requirement="excluded" read="false" read_requirement="excluded" write="false" write_no_response="true" write_no_response_requirement="mandatory" write_requirement="excluded"/>
       </characteristic>
       
       <!--GPIO_LED1-->
-      <characteristic id="xgatt_gpio_led1" name="GPIO_LED1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
+      <characteristic id="xgatt_gpio_led1" name="GPIO_LED1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
         <informativeText/>
         <value length="1" type="hex" variable_length="false">0</value>
         <properties indicate="false" indicate_requirement="excluded" notify="false" notify_requirement="excluded" read="false" read_requirement="excluded" write="false" write_no_response="true" write_no_response_requirement="mandatory" write_requirement="excluded"/>
+      </characteristic>
+      
+      <!--PWM1-->
+      <characteristic id="xgatt_gpio_PWM1" name="PWM1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
+        <informativeText/>
+        <value length="1" type="hex" variable_length="false"/>
+        <properties write_no_response="true" write_no_response_requirement="optional"/>
       </characteristic>
     </service>
     
