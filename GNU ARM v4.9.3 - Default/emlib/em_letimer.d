@@ -1,6 +1,6 @@
-emlib/em_cryotimer.o: \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0/platform/emlib/src/em_cryotimer.c \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_cryotimer.h \
+emlib/em_letimer.o: \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0/platform/emlib/src/em_letimer.c \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_letimer.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/em_device.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/efr32bg1b232f256gm56.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/CMSIS/Include/core_cm4.h \
@@ -45,10 +45,12 @@ emlib/em_cryotimer.o: \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/efr32bg1b_dmareq.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/efr32bg1b_af_ports.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/efr32bg1b_af_pins.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_cmu.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_assert.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_bus.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_bus.h
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_assert.h
 
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_cryotimer.h:
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_letimer.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/em_device.h:
 
@@ -138,6 +140,10 @@ emlib/em_cryotimer.o: \
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/Device/SiliconLabs/EFR32BG1B/Include/efr32bg1b_af_pins.h:
 
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_bus.h:
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_cmu.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_assert.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_bus.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0//platform/emlib/inc/em_assert.h:

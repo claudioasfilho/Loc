@@ -76,6 +76,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_i2c.c</locationURI>
 		</link>
 		<link>
+			<name>emlib/em_letimer.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Applications/Simplicity%20Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0/platform/emlib/src/em_letimer.c</locationURI>
+		</link>
+		<link>
 			<name>emlib/em_msc.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_msc.c</locationURI>

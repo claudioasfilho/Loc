@@ -18,6 +18,7 @@
 #include "peripherals.h"
 #include "em_usart.h"
 #include "em_leuart.h"
+#include "em_letimer.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -502,6 +503,55 @@ void LED1offUARTmessage(void)
 	  sprintf((char *)UARTbuffer, "LED1 Off\n\r");
 	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
 }
+
+
+
+void LETIMER0_IRQHandler(void)
+{
+    LETIMER_IntClear(LETIMER0,0x0F);
+
+
+    GPIO_PortOutSet(gpioPortD, 10);
+
+
+}
+
+void InitLETIMER0(void)
+{
+
+
+
+
+	//	CMU_ClockEnable(cmuClock_HFLE, true);
+		CMU_ClockEnable(cmuClock_LETIMER0, true);
+
+		LETIMER_CompareSet(LETIMER0, 0, 32768 / 40);   /* Toggle every 25ms */
+
+
+	//    CORE_SetNvicRamTableHandler((IRQn_Type)LETIMER0_IRQn, (void *)(((uint32_t)myLETIMER0_IRQHandler)|1));
+
+		LETIMER_Init_TypeDef letimerInit = LETIMER_INIT_DEFAULT;
+		letimerInit.enable = true;
+		letimerInit.debugRun = true;
+		letimerInit.comp0Top = true;
+		letimerInit.bufTop = false;
+		letimerInit.out0Pol = 1;
+		letimerInit.out1Pol = 0;
+		//letimerInit.ufoa0 = letimerUFOAToggle;
+			letimerInit.ufoa0 = letimerUFOANone;
+		letimerInit.ufoa1 = letimerUFOANone;
+		letimerInit.repMode = letimerRepeatFree;
+
+		LETIMER_Init(LETIMER0, &letimerInit);
+
+		LETIMER_IntEnable	(LETIMER0, _LETIMER_IEN_COMP0_MASK);
+		LETIMER_Enable(LETIMER0, true);
+
+		NVIC_ClearPendingIRQ(LETIMER0_IRQn);
+		NVIC_EnableIRQ(LETIMER0_IRQn);
+
+}
+
 
 
 
