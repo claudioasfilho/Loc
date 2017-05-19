@@ -117,7 +117,7 @@ int main(void)
   UpdatePWM1(15);
   InitLETIMER0();
 
-  while (1);
+ // while (1);
 
 
 
@@ -176,11 +176,21 @@ int main(void)
 
       case gecko_evt_system_external_signal_id:
 
-      if (evt->data.evt_system_external_signal.extsignals == USART0_DATA_AVAILABLE)
+      if (evt->data.evt_system_external_signal.extsignals == LEUSART0INT)
 
       {
 
       //your code
+
+      }
+
+      if (evt->data.evt_system_external_signal.extsignals == LETIMER0INT)
+
+      {
+
+
+    	GPIO_PortOutSet(gpioPortD, 10);
+
 
       }
 

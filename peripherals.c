@@ -408,7 +408,7 @@ void LEUART0_IRQHandler(void)
   /* Store and reset pending interupts */
   leuartif = LEUART_IntGet(LEUART0);
   LEUART_IntClear(LEUART0, leuartif);
-  gecko_external_signal(USART0_DATA_AVAILABLE);
+  gecko_external_signal(LEUSART0INT);
 
 #if 0
   /* Signal frame found. */
@@ -510,8 +510,7 @@ void LETIMER0_IRQHandler(void)
 {
     LETIMER_IntClear(LETIMER0,0x0F);
 
-
-    GPIO_PortOutSet(gpioPortD, 10);
+    gecko_external_signal(LETIMER0INT);
 
 
 }
