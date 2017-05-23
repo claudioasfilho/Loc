@@ -117,7 +117,7 @@ int main(void)
   UpdatePWM1(15);
   InitLETIMER0();
 
- // while (1);
+  //while (1);
 
 
 
@@ -188,8 +188,8 @@ int main(void)
 
       {
 
-
-    	GPIO_PortOutSet(gpioPortD, 10);
+    	  //Toggle LED1 just for timing purposes
+    	  	GPIO_PinOutToggle(gpioPortF, 5);
 
 
       }

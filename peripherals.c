@@ -87,7 +87,8 @@ void InitGPIO(void) {
 	GPIO_PinModeSet(gpioPortA, 5, gpioModePushPull, 1);
 	// [Port A Configuration]$
 
-
+	/* Test GPIO */
+//	GPIO_PinModeSet(gpioPortD, 10, gpioModePushPull, 1);
 
 }
 
@@ -313,7 +314,9 @@ void InitLEUART0(void) {
 	initleuart.databits = leuartDatabits8;
 	initleuart.parity = leuartNoParity;
 	initleuart.stopbits = leuartStopbits1;
+
 	LEUART_Init(LEUART0, &initleuart);
+
 
 	/* Configuring non-standard properties */
 	//LEUART_TxDmaInEM2Enable(LEUART0, 1);
@@ -336,10 +339,10 @@ void InitLEUART0(void) {
 	  /* Set LEUART signal frame */
 	  LEUART0->SIGFRAME = UART_EOF;
 
-	  //Start-Frame Unblock set - Clears RXBLOCK when the start-frame is found in the incoming data. The start-frame is loaded into the receive buffer.
-		LEUART0->CTRL |= 0x100;
+/*	  //Start-Frame Unblock set - Clears RXBLOCK when the start-frame is found in the incoming data. The start-frame is loaded into the receive buffer.
+		LEUART0->CTRL |= 0x100;*/
 
-	  // leuartif = LEUART_IntGet(LEUART0);
+
 	  LEUART_IntClear(LEUART0, 0);
 
 	  //LEUART_IEN_SIGF
@@ -348,11 +351,14 @@ void InitLEUART0(void) {
 
 	 /* Enable LEUART any byte received Interrupt */
 	  	  LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
-	  		  /* Enable LEUART Signal Frame Interrupt */
-	  		//  LEUART_IntEnable(LEUART0, LEUART_IEN_SIGF);
+
+
+	  /* Enable LEUART Signal Frame Interrupt */
+	//  LEUART_IntEnable(LEUART0, LEUART_IEN_SIGF);
 
 	  /* Enable LEUART1 interrupt vector */
-	  //NVIC_EnableIRQ(LEUART0_IRQn);
+	  NVIC_ClearPendingIRQ(LEUART0_IRQn);
+	  NVIC_EnableIRQ(LEUART0_IRQn);
 
 
 	// [LEUART0 initialization]$
@@ -407,7 +413,9 @@ void LEUART0_IRQHandler(void)
 {
   /* Store and reset pending interupts */
   leuartif = LEUART_IntGet(LEUART0);
-  LEUART_IntClear(LEUART0, leuartif);
+  LEUART_IntClear(LEUART0, 0xff);
+
+  NVIC_ClearPendingIRQ(LEUART0_IRQn);
   gecko_external_signal(LEUSART0INT);
 
 #if 0
@@ -506,44 +514,37 @@ void LED1offUARTmessage(void)
 
 
 
+/**************************************************************************//**
+ * @brief LETIMER Related Functions and variables
+ *
+ *****************************************************************************/
+
 void LETIMER0_IRQHandler(void)
 {
-    LETIMER_IntClear(LETIMER0,0x0F);
+    LETIMER_IntClear(LETIMER0,LETIMER_IFC_UF);
+
+	LETIMER0->CNT=0x333;
 
     gecko_external_signal(LETIMER0INT);
-
 
 }
 
 void InitLETIMER0(void)
 {
 
-
-
-
 	//	CMU_ClockEnable(cmuClock_HFLE, true);
 		CMU_ClockEnable(cmuClock_LETIMER0, true);
 
-		LETIMER_CompareSet(LETIMER0, 0, 32768 / 40);   /* Toggle every 25ms */
-
-
-	//    CORE_SetNvicRamTableHandler((IRQn_Type)LETIMER0_IRQn, (void *)(((uint32_t)myLETIMER0_IRQHandler)|1));
 
 		LETIMER_Init_TypeDef letimerInit = LETIMER_INIT_DEFAULT;
-		letimerInit.enable = true;
-		letimerInit.debugRun = true;
-		letimerInit.comp0Top = true;
-		letimerInit.bufTop = false;
-		letimerInit.out0Pol = 1;
-		letimerInit.out1Pol = 0;
-		//letimerInit.ufoa0 = letimerUFOAToggle;
-			letimerInit.ufoa0 = letimerUFOANone;
-		letimerInit.ufoa1 = letimerUFOANone;
-		letimerInit.repMode = letimerRepeatFree;
+
+
+		LETIMER0->CNT=0x333; //Timer In Count Down Mode. Reload value represents 25ms
 
 		LETIMER_Init(LETIMER0, &letimerInit);
 
-		LETIMER_IntEnable	(LETIMER0, _LETIMER_IEN_COMP0_MASK);
+		LETIMER_IntEnable	(LETIMER0, LETIMER_IEN_UF); //LETIMER Underflow Interrupt enabled
+
 		LETIMER_Enable(LETIMER0, true);
 
 		NVIC_ClearPendingIRQ(LETIMER0_IRQn);
