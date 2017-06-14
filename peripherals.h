@@ -27,6 +27,9 @@
 #define UART_SOF '$'
 #define UART_EOF '\r'
 
+#define LETIMERReload 1475 // (1/32768)*45ms
+
+
 
 
 #define LEUSART0INT 0xf0

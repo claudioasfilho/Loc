@@ -30,7 +30,7 @@ GPIOS UserGPIOs;
  * @brief GPIO Related Functions  and variables
  *
  *****************************************************************************/
-
+//uint8_t test[256];
 
 void InitGPIO(void) {
 
@@ -317,12 +317,6 @@ void InitLEUART0(void) {
 
 	LEUART_Init(LEUART0, &initleuart);
 
-
-	/* Configuring non-standard properties */
-	//LEUART_TxDmaInEM2Enable(LEUART0, 1);
-	//LEUART_RxDmaInEM2Enable(LEUART0, 1);
-
-
 	/* Set up RX pin */
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
 			| LEUART_ROUTELOC0_RXLOC_LOC16; //PD9
@@ -333,28 +327,10 @@ void InitLEUART0(void) {
 			| LEUART_ROUTELOC0_TXLOC_LOC0; //PA0
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_TXPEN;
 
-	  /* Set LEUART signal frame */
-	  LEUART0->STARTFRAME = UART_SOF;
+	/*Set to clear receive buffer and the RX shift register.*/
+	//LEUART0->CMD = LEUART_CMD_CLEARRX;
 
-	  /* Set LEUART signal frame */
-	  LEUART0->SIGFRAME = UART_EOF;
-
-/*	  //Start-Frame Unblock set - Clears RXBLOCK when the start-frame is found in the incoming data. The start-frame is loaded into the receive buffer.
-		LEUART0->CTRL |= 0x100;*/
-
-
-	  LEUART_IntClear(LEUART0, 0);
-
-	  //LEUART_IEN_SIGF
-	  /* Enable LEUART Start Frame Interrupt */
-	  	  	  LEUART_IntEnable(LEUART0, LEUART_IEN_STARTF );
-
-	 /* Enable LEUART any byte received Interrupt */
-	  	  LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
-
-
-	  /* Enable LEUART Signal Frame Interrupt */
-	//  LEUART_IntEnable(LEUART0, LEUART_IEN_SIGF);
+	//LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
 
 	  /* Enable LEUART1 interrupt vector */
 	  NVIC_ClearPendingIRQ(LEUART0_IRQn);
@@ -370,6 +346,31 @@ void InitLEUART0(void) {
 
 
 }
+
+
+/**************************************************************************//**
+ * @brief LEUART IRQ handler
+ *
+ * When the signal frame is detected by the LEUART, this interrupt routine will
+ * zero-terminate the char array, write the received string the to the LCD, and
+ * reset the DMA for new data.
+ *
+ *****************************************************************************/
+void LEUART0_IRQHandler(void)
+{
+  /* Store and reset pending interupts */
+
+  UARTbuffer[0] = LEUART0->RXDATA;
+  leuartif = LEUART_IntGet(LEUART0);
+
+  LEUART0->IFC = 0xffff;
+  LEUART_IntClear(LEUART0, leuartif);
+
+  NVIC_ClearPendingIRQ(LEUART0_IRQn);
+  gecko_external_signal(LEUSART0INT);
+
+}
+
 
 void UART_Tx(uint8_t * buffer, uint16_t size)
 {
@@ -395,48 +396,6 @@ void UART_TxOut(uint8_t * buffer, uint16_t size)
 		LEUART_Tx(LEUART0, *buffer++);
 
 	}
-
-}
-
-
-
-
-/**************************************************************************//**
- * @brief LEUART IRQ handler
- *
- * When the signal frame is detected by the LEUART, this interrupt routine will
- * zero-terminate the char array, write the received string the to the LCD, and
- * reset the DMA for new data.
- *
- *****************************************************************************/
-void LEUART0_IRQHandler(void)
-{
-  /* Store and reset pending interupts */
-  leuartif = LEUART_IntGet(LEUART0);
-  LEUART_IntClear(LEUART0, 0xff);
-
-  NVIC_ClearPendingIRQ(LEUART0_IRQn);
-  gecko_external_signal(LEUSART0INT);
-
-#if 0
-  /* Signal frame found. */
-  if (leuartif & LEUART_IF_SIGF)
-  {
-    /* Zero-terminate rx buffer */
-    len            = BUF_MAX - 1 - ((dmaControlBlock->CTRL >> 4) & 0x3FF);
-    rxbuf[len - 1] = 0;
-
-    /* Reactivate DMA */
-    DMA_ActivateBasic(DMA_CHANNEL,     /* Activate DMA channel 0 */
-                      true,            /* Activate using primary descriptor */
-                      false,           /* No DMA burst */
-                      NULL,            /* Keep source */
-                      NULL,            /* Keep destination */
-                      BUF_MAX - 1);    /* Number of DMA transfer elements (minus 1) */
-
-
-  }
-#endif
 
 }
 
@@ -523,7 +482,7 @@ void LETIMER0_IRQHandler(void)
 {
     LETIMER_IntClear(LETIMER0,LETIMER_IFC_UF);
 
-	LETIMER0->CNT=0x333;
+	LETIMER0->CNT = LETIMERReload;	//Reloads the Timer counter
 
     gecko_external_signal(LETIMER0INT);
 
@@ -532,14 +491,13 @@ void LETIMER0_IRQHandler(void)
 void InitLETIMER0(void)
 {
 
-	//	CMU_ClockEnable(cmuClock_HFLE, true);
 		CMU_ClockEnable(cmuClock_LETIMER0, true);
 
 
 		LETIMER_Init_TypeDef letimerInit = LETIMER_INIT_DEFAULT;
 
 
-		LETIMER0->CNT=0x333; //Timer In Count Down Mode. Reload value represents 25ms
+		LETIMER0->CNT= LETIMERReload; //Timer In 16bit Count Down Mode. Reload value represents (32768 Khz time base)
 
 		LETIMER_Init(LETIMER0, &letimerInit);
 

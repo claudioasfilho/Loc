@@ -180,7 +180,8 @@ int main(void)
 
       {
 
-      //your code
+    	  //Toggle LED1 just for timing purposes
+    	  	GPIO_PinOutToggle(gpioPortF, 5);
 
       }
 
@@ -188,8 +189,7 @@ int main(void)
 
       {
 
-    	  //Toggle LED1 just for timing purposes
-    	  	GPIO_PinOutToggle(gpioPortF, 5);
+
 
 
       }
