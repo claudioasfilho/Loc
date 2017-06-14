@@ -103,6 +103,7 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	CMU_OscillatorEnable(cmuOsc_HFRCO, false, false);
 	// [High Frequency Clock Setup]$
 
+
 	// $[LE clocks enable]
 	/* Enable clock to LE modules */
 	CMU_ClockEnable(cmuClock_CORELE, true);
@@ -124,18 +125,22 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	// $[LFACLK Setup]
 	/* Select LFXO as clock source for LFACLK */
 	CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFXO);
+	//CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_HFXO);
 	// [LFACLK Setup]$
 
 	// $[LFBCLK Setup]
 	/* Select LFXO as clock source for LFBCLK */
 	CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_LFXO);
+	//CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_HFXO);
 	// [LFBCLK Setup]$
 
 	// $[LFECLK Setup]
 	/* Select LFXO as clock source for LFECLK */
 	CMU_ClockSelectSet(cmuClock_LFE, cmuSelect_LFXO);
-	// [LFECLK Setup]$
 
+//	CMU_ClockSelectSet(cmuClock_LFE, cmuSelect_HFXO);
+	// [LFECLK Setup]$
+#if 0
 	// $[Peripheral Clock enables]
 	/* Enable clock for GPCRC */
 	CMU_ClockEnable(cmuClock_GPCRC, true);
@@ -156,7 +161,7 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	CMU_ClockEnable(cmuClock_GPIO, true);
 
 	// [Peripheral Clock enables]$
-
+#endif
 	// $[Clock output]
 	/* Disable CLKOUT0 output */
 	CMU->CTRL = (CMU->CTRL & ~_CMU_CTRL_CLKOUTSEL0_MASK)

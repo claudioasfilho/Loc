@@ -54,7 +54,6 @@
 #include <stdio.h>
 
 
-
 /***********************************************************************************************//**
  * @addtogroup app
  * @{
@@ -109,31 +108,18 @@ int main(void)
   /* Initialize peripherals */
   enter_DefaultMode_from_RESET();
 
- // sprintf((char *)UARTbuffer, "Uart test 123    \n\r");
+  /* Initialize stack */
+  gecko_init(&config);
 
   InitPWM1();
   InitLEUART0();
   InitGPIO();
   UpdatePWM1(15);
+  InitLETIMER0();
+
+  //while (1);
 
 
-#ifdef TESTING
-
-
-  while (1)
-  {
-	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
-	  UART_TXHandler();
-	  UART_RXHandler();
-	  PWMHandler();
-	  GPIOHandler();
-	  for (int counterr=0; counterr<0x3fff; counterr++);
-  }
-
-#endif
-
-  /* Initialize stack */
-  gecko_init(&config);
 
   while (1) {
     /* Event pointer for handling events */
@@ -190,11 +176,21 @@ int main(void)
 
       case gecko_evt_system_external_signal_id:
 
-      if (evt->data.evt_system_external_signal.extsignals == USART0_DATA_AVAILABLE)
+      if (evt->data.evt_system_external_signal.extsignals == LEUSART0INT)
 
       {
 
-      //your code
+    	  //Toggle LED1 just for timing purposes
+    	  	GPIO_PinOutToggle(gpioPortF, 5);
+
+      }
+
+      if (evt->data.evt_system_external_signal.extsignals == LETIMER0INT)
+
+      {
+
+
+
 
       }
 

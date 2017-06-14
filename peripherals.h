@@ -26,7 +26,14 @@
 #define UARTBUFFERSIZE 64
 #define UART_SOF '$'
 #define UART_EOF '\r'
-#define USART0_DATA_AVAILABLE 0xf5
+
+#define LETIMERReload 1475 // (1/32768)*45ms
+
+
+
+
+#define LEUSART0INT 0xf0
+#define LETIMER0INT 0xf1
 
 typedef union
         {
@@ -115,6 +122,11 @@ void LED0onUARTmessage(void);
 void LED0offUARTmessage(void);
 void LED1onUARTmessage(void);
 void LED1offUARTmessage(void);
+
+
+/*LETIMER0 */
+
+void InitLETIMER0(void);
 
 #endif /* PERIPHERALS_H_ */
 

@@ -28,7 +28,7 @@
 		<link>
 			<name>em_timer.c</name>
 			<type>1</type>
-			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_timer.c</locationURI>
+			<location>/Applications/Simplicity Studio.app/Contents/Eclipse/developer/stacks/blehomekit/v1.1.0/platform/emlib/src/em_timer.c</location>
 		</link>
 		<link>
 			<name>bgapi/dmadrv.c</name>
