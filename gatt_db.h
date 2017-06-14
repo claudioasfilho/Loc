@@ -16,11 +16,11 @@ extern const struct bg_gattdb_def bg_gattdb_data;
 #define gattdb_service_changed_char             3
 #define gattdb_device_name                      7
 #define gattdb_xgatt_gpio_pb0                  19
-#define gattdb_xgatt_gpio_pb1                  21
-#define gattdb_xgatt_gpio_led0                 23
-#define gattdb_xgatt_gpio_led1                 25
-#define gattdb_xgatt_gpio_PWM1                 27
-#define gattdb_xgatt_gpio_uart                 29
-#define gattdb_ota_control                     32
+#define gattdb_xgatt_gpio_pb1                  22
+#define gattdb_xgatt_gpio_led0                 25
+#define gattdb_xgatt_gpio_led1                 28
+#define gattdb_xgatt_gpio_PWM1                 31
+#define gattdb_xgatt_gpio_uart                 34
+#define gattdb_ota_control                     38
 
 #endif

@@ -39,7 +39,7 @@ extern void enter_DefaultMode_from_RESET(void) {
 	LFXO_enter_DefaultMode_from_RESET();
 	CMU_enter_DefaultMode_from_RESET();
 	RTCC_enter_DefaultMode_from_RESET();
-//	LEUART0_enter_DefaultMode_from_RESET();
+	LEUART0_enter_DefaultMode_from_RESET();
 	GPCRC_enter_DefaultMode_from_RESET();
 	LDMA_enter_DefaultMode_from_RESET();
 	PRS_enter_DefaultMode_from_RESET();
@@ -67,6 +67,22 @@ extern void EMU_enter_DefaultMode_from_RESET(void) {
 	dcdcInit.reverseCurrentControl = 160;
 
 	EMU_DCDCInit(&dcdcInit);
+	/* Initialize EM2/EM3 mode */
+	EMU_EM23Init_TypeDef em23Init = EMU_EM23INIT_DEFAULT;
+
+	em23Init.em23VregFullEn = 0;
+
+	EMU_EM23Init(&em23Init);
+	/* Initialize EM4H/S mode */
+	EMU_EM4Init_TypeDef em4Init = EMU_EM4INIT_DEFAULT;
+
+	em4Init.retainLfrco = 0;
+	em4Init.retainLfxo = 0;
+	em4Init.retainUlfrco = 0;
+	em4Init.em4State = emuEM4Shutoff;
+	em4Init.pinRetentionMode = emuPinRetentionDisable;
+
+	EMU_EM4Init(&em4Init);
 	// [EMU Initialization]$
 
 }
@@ -87,22 +103,24 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	/* Initializing HFXO */
 	CMU_HFXOInit_TypeDef hfxoInit = CMU_HFXOINIT_DEFAULT;
 
-	hfxoInit.autoStartEm01 = 1;
-
 	CMU_HFXOInit(&hfxoInit);
-
-	/* Skipping HFXO oscillator enable, as it is auto-enabled on EM0/EM1 entry */
 
 	/* Setting system HFXO frequency */
 	SystemHFXOClockSet(38400000);
+
+	/* Enable HFXO oscillator, and wait for it to be stable */
+	CMU_OscillatorEnable(cmuOsc_HFXO, true, true);
 
 	/* Using HFXO as high frequency clock, HFCLK */
 	CMU_ClockSelectSet(cmuClock_HF, cmuSelect_HFXO);
 
 	/* HFRCO not needed when using HFXO */
 	CMU_OscillatorEnable(cmuOsc_HFRCO, false, false);
-	// [High Frequency Clock Setup]$
 
+	/* Set autostart behaviour */
+	CMU_HFXOAutostartEnable(0, true, false);
+
+	// [High Frequency Clock Setup]$
 
 	// $[LE clocks enable]
 	/* Enable clock to LE modules */
@@ -115,7 +133,7 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	CMU_LFXOInit(&lfxoInit);
 
 	/* Enable LFXO oscillator, and wait for it to be stable */
-	CMU_OscillatorEnable(cmuOsc_LFXO, true, false);
+	CMU_OscillatorEnable(cmuOsc_LFXO, true, true);
 
 	/* Setting system LFXO frequency */
 	SystemLFXOClockSet(32768);
@@ -125,20 +143,16 @@ extern void CMU_enter_DefaultMode_from_RESET(void) {
 	// $[LFACLK Setup]
 	/* Select LFXO as clock source for LFACLK */
 	CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFXO);
-	//CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_HFXO);
 	// [LFACLK Setup]$
 
 	// $[LFBCLK Setup]
 	/* Select LFXO as clock source for LFBCLK */
 	CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_LFXO);
-	//CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_HFXO);
 	// [LFBCLK Setup]$
 
 	// $[LFECLK Setup]
 	/* Select LFXO as clock source for LFECLK */
 	CMU_ClockSelectSet(cmuClock_LFE, cmuSelect_LFXO);
-
-//	CMU_ClockSelectSet(cmuClock_LFE, cmuSelect_HFXO);
 	// [LFECLK Setup]$
 #if 0
 	// $[Peripheral Clock enables]
@@ -320,10 +334,6 @@ extern void LEUART0_enter_DefaultMode_from_RESET(void) {
 	// $[LEUART0 initialization]
 	LEUART_Init_TypeDef initleuart = LEUART_INIT_DEFAULT;
 
-
-	/* Enable clock for LEUART0 */
-	CMU_ClockEnable(cmuClock_LEUART0, true);
-
 	initleuart.enable = leuartEnable;
 	initleuart.baudrate = 9600;
 	initleuart.databits = leuartDatabits8;
@@ -331,40 +341,20 @@ extern void LEUART0_enter_DefaultMode_from_RESET(void) {
 	initleuart.stopbits = leuartStopbits1;
 	LEUART_Init(LEUART0, &initleuart);
 
-	/* Configuring non-standard properties */
-	//LEUART_TxDmaInEM2Enable(LEUART0, 1);
-	//LEUART_RxDmaInEM2Enable(LEUART0, 1);
-
-
+	/* Configuring LEUART I/O */
 	/* Set up RX pin */
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
-			| LEUART_ROUTELOC0_RXLOC_LOC16; //PD9
+			| LEUART_ROUTELOC0_RXLOC_LOC0;
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_RXPEN;
 
 	/* Set up TX pin */
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_TXLOC_MASK))
-			| LEUART_ROUTELOC0_TXLOC_LOC0; //PA0
+			| LEUART_ROUTELOC0_TXLOC_LOC0;
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_TXPEN;
 
-	  /* Set LEUART signal frame */
-	  LEUART0->STARTFRAME = '$';
-
-	  /* Enable LEUART Signal Frame Interrupt */
-	//  LEUART_IntEnable(LEUART0, LEUART_IEN_SIGF);
-
-	 // leuartif = LEUART_IntGet(LEUART0);
-	  LEUART_IntClear(LEUART0, 0);
-
-
-	  //LEUART_IEN_SIGF
-	  /* Enable LEUART Signal Frame Interrupt */
-	  //	  	  LEUART_IntEnable(LEUART0, LEUART_IEN_STARTF );
-	  	  LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
-
-
-	  /* Enable LEUART1 interrupt vector */
-	  //NVIC_EnableIRQ(LEUART0_IRQn);
-
+	/* Configuring non-standard properties */
+	LEUART_TxDmaInEM2Enable(LEUART0, 1);
+	LEUART_RxDmaInEM2Enable(LEUART0, 1);
 
 	// [LEUART0 initialization]$
 

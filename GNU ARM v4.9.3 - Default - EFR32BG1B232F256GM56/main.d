@@ -62,16 +62,12 @@ main.o: ../main.c ../boards.h ../ble-configuration.h ../board_features.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/radio/rail_lib/chip/efr32/rf/common/cortex/pti.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_gpio.h \
  /Users/clfilho/SimplicityStudio/v4_workspace/EmptywHW/inc/InitDevice.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_chip.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_system.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_gpio.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_usart.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//hardware/kit/common/drivers/mx25flash_spi.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//hardware/kit/EFR32BG1_BRD4302A/config/mx25flash_config.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_timer.h \
  ../peripherals.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_leuart.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_letimer.h
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_leuart.h
 
 ../boards.h:
 
@@ -205,12 +201,6 @@ main.o: ../main.c ../boards.h ../ble-configuration.h ../board_features.h \
 
 /Users/clfilho/SimplicityStudio/v4_workspace/EmptywHW/inc/InitDevice.h:
 
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_chip.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_system.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_gpio.h:
-
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_usart.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//hardware/kit/common/drivers/mx25flash_spi.h:
@@ -222,5 +212,3 @@ main.o: ../main.c ../boards.h ../ble-configuration.h ../board_features.h \
 ../peripherals.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_leuart.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_letimer.h:

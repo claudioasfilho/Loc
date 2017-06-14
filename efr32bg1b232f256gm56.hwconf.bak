@@ -6,6 +6,7 @@
     <property object="CMU" propertyId="clocksettings.lfclocksettings.lfaclocksource" value="LFXO"/>
     <property object="CMU" propertyId="clocksettings.lfclocksettings.lfbclocksource" value="LFXO"/>
     <property object="CMU" propertyId="clocksettings.lfclocksettings.lfeclocksource" value="LFXO"/>
+    <property object="CMU" propertyId="hfxo.initialization.autostartem01" value="Enabled"/>
     <property object="CMU" propertyId="hfxo.initialization.autostarthfxoonem01entry" value="Enable"/>
     <property object="CMU" propertyId="lfxo.initialization.internalloadcapacitancectune" value="32"/>
     <property object="CRYPTO" propertyId="ABPeripheral.included" value="true"/>

@@ -55,6 +55,7 @@
       
       <!--GPIO_PB0-->
       <characteristic id="xgatt_gpio_pb0" name="GPIO_PB0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
+        <description>GPIO_PB0</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
         <properties read="true" read_requirement="optional"/>
@@ -62,6 +63,7 @@
       
       <!--GPIO_PB1-->
       <characteristic id="xgatt_gpio_pb1" name="GPIO_PB1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="0be6e7f0-83de-46bb-bd63-667e9c857bc1">
+        <description>GPIO_PB1</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
         <properties read="true" read_requirement="optional"/>
@@ -69,6 +71,7 @@
       
       <!--GPIO_LED0-->
       <characteristic id="xgatt_gpio_led0" name="GPIO_LED0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b663d28a-aeb5-4456-8d7d-91a6dbcd6bcb">
+        <description>GPIO_LED0</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
@@ -76,6 +79,7 @@
       
       <!--GPIO_LED1-->
       <characteristic id="xgatt_gpio_led1" name="GPIO_LED1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
+        <description>GPIO_LED1</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
@@ -83,6 +87,7 @@
       
       <!--PWM1-->
       <characteristic id="xgatt_gpio_PWM1" name="PWM1" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
+        <description>PWM1</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false"/>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
@@ -90,6 +95,7 @@
       
       <!--UART Buffer-->
       <characteristic id="xgatt_gpio_uart" name="UART Buffer" sourceId="" uuid="de2b52b9-a94d-4c5b-a810-c2deee74aeed">
+        <description>UART Buffer</description>
         <informativeText/>
         <value length="64" type="user" variable_length="false"/>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>

@@ -11,7 +11,7 @@
       <!--Device Name-->
       <characteristic id="device_name" name="Device Name" sourceId="org.bluetooth.characteristic.gap.device_name" uuid="2A00">
         <informativeText/>
-        <value length="13" type="utf-8" variable_length="false">Locoroll</value>
+        <value length="13" type="utf-8" variable_length="false">EmptywHW</value>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
       </characteristic>
       
@@ -55,6 +55,7 @@
       
       <!--GPIO_PB0-->
       <characteristic id="xgatt_gpio_pb0" name="GPIO_PB0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="1732a881-a231-4631-8118-cd5d03db8d17">
+        <description>GPIO_PB0</description>
         <informativeText/>
         <value length="1" type="user" variable_length="false">0</value>
         <properties read="true" read_requirement="optional"/>
