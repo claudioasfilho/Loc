@@ -41,8 +41,29 @@ void InitGPIO(void) {
 	//LE UART TX - PIN P9 on WSTK
 	GPIO_PinModeSet(gpioPortA, 0, gpioModePushPull, 1);
 
+#if PD9FORRX
 	//LE UART RX - PIN P37 on WSTK
-	GPIO_PinModeSet(gpioPortD, 9, gpioModeInput, 0);
+	//GPIO_PinModeSet(gpioPortD, 9, gpioModeInput, 0);
+
+#else
+	//LE UART RX - PIN P11 on WSTK
+	GPIO_PinModeSet(gpioPortA, 1, gpioModeInput, 0);
+
+	/*VCOM_ENABLE*/
+
+
+	/* Pin PA3 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortA, 3, gpioModePushPull, 0);
+
+	/* Pin PA4 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortA, 4, gpioModePushPull, 1);
+	// [Port A Configuration]$
+
+
+	/* Pin PA5 is configured to Push-pull */
+	GPIO_PinModeSet(gpioPortA, 5, gpioModePushPull, 1);
+	// [Port A Configuration]$
+#endif
 
 
 	/*PWM Function Related GPIOs*/
@@ -77,15 +98,11 @@ void InitGPIO(void) {
 
 	/*Other GPIOs*/
 
-	/* Pin PA1 is configured to Input enabled */
-	GPIO_PinModeSet(gpioPortA, 1, gpioModeInput, 0);
 
-	/* Pin PA3 is configured to Push-pull */
-	GPIO_PinModeSet(gpioPortA, 3, gpioModePushPull, 0);
 
-	/* Pin PA5 is configured to Push-pull */
-	GPIO_PinModeSet(gpioPortA, 5, gpioModePushPull, 1);
-	// [Port A Configuration]$
+
+
+
 
 	/* Test GPIO */
 //	GPIO_PinModeSet(gpioPortD, 10, gpioModePushPull, 1);
@@ -318,9 +335,18 @@ void InitLEUART0(void) {
 	LEUART_Init(LEUART0, &initleuart);
 
 	/* Set up RX pin */
+
+#if PD9FORRX
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
 			| LEUART_ROUTELOC0_RXLOC_LOC16; //PD9
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_RXPEN;
+#else
+
+	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
+			| LEUART_ROUTELOC0_RXLOC_LOC0; //PA1
+	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_RXPEN;
+
+#endif
 
 	/* Set up TX pin */
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_TXLOC_MASK))
