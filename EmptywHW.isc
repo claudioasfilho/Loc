@@ -120,6 +120,12 @@ PATH(PROJECT_RELATIVE):main.c
         <value length="64" type="user" variable_length="false"/>
         <properties read="true" read_requirement="optional" write="true" write_requirement="optional"/>
       </characteristic>
+      <characteristic id="xgatt_gpio_ADC0" name="ADC0" sourceId="org.bluetooth.characteristic.gatt.service_changed" uuid="b1eec91a-1951-11e7-93ae-92361f002671">
+        <description>ADC0</description>
+        <informativeText/>
+        <value length="4" type="user" variable_length="false"/>
+        <properties read="true" read_requirement="optional"/>
+      </characteristic>
     </service>
     <service advertise="false" name="Silicon Labs OTA" requirement="mandatory" sourceId="com.silabs.service.ota" type="primary" uuid="1D14D6EE-FD63-4FA1-BFA4-8F47B42119F0">
       <informativeText>Abstract: The Silicon Labs OTA Service enables over-the-air firmware update of the device. </informativeText>

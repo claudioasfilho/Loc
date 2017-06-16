@@ -41,7 +41,7 @@ typedef union
 	struct{
 		uint8_t			TXready:1;		//For UART Only - It indicates when to Transmit
 	  	uint8_t			RXready:1;		//For UART Only - It indicates when data is available
-	  	uint8_t			Unused2:1;
+	  	uint8_t			ADCSample:1;	//For ADC Only - It indicates there is a request to sample ADC
 	  	uint8_t			Unused3:1;
 	  	uint8_t			Unused4:1;
 	  	uint8_t			Enabled:1;       // Is the task enabled or not?
@@ -77,6 +77,14 @@ typedef union
 
 	uint16_t all;
 	} GPIOS;
+
+
+typedef union
+		{
+	uint32_t value;
+	uint8_t array[4];
+	} ADCRESULT;
+
 
 extern uint8_t UARTbuffer[UARTBUFFERSIZE];
 
@@ -127,6 +135,12 @@ void LED1offUARTmessage(void);
 /*LETIMER0 */
 
 void InitLETIMER0(void);
+
+/*ADC0*/
+
+void InitADC0(void);
+uint32_t GetADC0();
+
 
 #endif /* PERIPHERALS_H_ */
 

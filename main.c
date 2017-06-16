@@ -89,7 +89,7 @@ static const gecko_configuration_t config = {
 uint8_t boot_to_dfu = 0;
 
 uint8_t localPWM;
-
+ADCRESULT tempo;
 
 /**
  * @brief  Main function
@@ -116,10 +116,17 @@ int main(void)
   InitGPIO();
   UpdatePWM1(15);
   InitLETIMER0();
+  InitADC0();
 
-  //while (1);
+#if 0
+  while (1)//;
+  {
 
+	  tempo.value = GetADC0();
+	  for(uint16_t temp=0; temp<0xff; temp++);
+  }
 
+#endif
 
   while (1) {
     /* Event pointer for handling events */
@@ -232,6 +239,13 @@ int main(void)
         	  uint8_t temp;
         	  temp = GetPWM1();
               gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_PWM1,0,1, &temp);
+          }
+
+          if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_ADC0 )
+          {
+        	  //ADCRESULT temp;
+        	  tempo.value = GetADC0();
+              gecko_cmd_gatt_server_send_user_read_response(evt->data.evt_gatt_server_user_read_request.connection,gattdb_xgatt_gpio_ADC0,0,4, (uint8_t *)tempo.array);
           }
 
           if (evt->data.evt_gatt_server_user_read_request.characteristic == gattdb_xgatt_gpio_uart )

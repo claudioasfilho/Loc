@@ -57,7 +57,8 @@ peripherals.o: ../peripherals.c \
  ../peripherals.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_usart.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_leuart.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_letimer.h
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_letimer.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_adc.h
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_timer.h:
 
@@ -176,3 +177,5 @@ peripherals.o: ../peripherals.c \
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_leuart.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_letimer.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v1.0//platform/emlib/inc/em_adc.h:

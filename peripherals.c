@@ -19,11 +19,13 @@
 #include "em_usart.h"
 #include "em_leuart.h"
 #include "em_letimer.h"
+#include "em_adc.h"
 #include <string.h>
 #include <stdio.h>
 
 OBJFLAGS PWMObj;
 OBJFLAGS UARTObj;
+OBJFLAGS ADCObj;
 GPIOS UserGPIOs;
 
 /**************************************************************************//**
@@ -77,6 +79,11 @@ void InitGPIO(void) {
 	//PWM Output - PIN P7 on WSTK
 	GPIO_PinModeSet(gpioPortC, 9, gpioModePushPull, 0);
 
+	/*ADC Function Related GPIOs*/
+
+	//ADC Input - PIN P8 on WSTK - PD12
+
+	//GPIO_PinModeSet(gpioPortD, 12, gpioModeInput, 0);
 
 	/*General Purpose Function Related GPIOs*/
 
@@ -562,7 +569,75 @@ void InitLETIMER0(void)
 
 }
 
+/****************************************************************************
+ * @brief ADC0 Related Functions and variables
+ *
+ *****************************************************************************/
+static uint32_t ADCresult=0;
 
+void InitADC0(void) {
+
+	// $[ADC0_Init]
+//	ADC_Init_TypeDef ADC0_init = ADC_INIT_DEFAULT;
+
+	/* Enable clock for ADC0 */
+	CMU_ClockEnable(cmuClock_ADC0, true);
+
+
+	  /* Base the ADC configuration on the default setup. */
+	  ADC_Init_TypeDef       init  = ADC_INIT_DEFAULT;
+	  ADC_InitSingle_TypeDef sInit = ADC_INITSINGLE_DEFAULT;
+
+	  /* Initialize timebases */
+	  init.timebase = ADC_TimebaseCalc(0);
+	  init.prescale = ADC_PrescaleCalc(380000, 0);
+	  ADC_Init(ADC0, &init);
+
+	  /* Set input to temperature sensor. Reference must be 1.25V */
+	  sInit.reference   = adcRefVDD;
+	  sInit.acqTime     = adcAcqTime8; /* Minimum time for temperature sensor */
+	  //sInit.posSel      = adcPosSelTEMP;
+	  sInit.posSel = adcPosSelAPORT3XCH4;
+	  sInit.negSel = adcNegSelVSS;
+	  ADC_InitSingle(ADC0, &sInit);
+
+	ADCresult=0;
+	ADCObj.all =0;
+	ADCObj.bits.Enabled=1;
+
+}
+
+#if ADCTimed
+void ADC_Handler(void)
+{
+	if(ADCObj.bits.Enabled==1)
+	{
+		if (ADCObj.bits.ADCSample==1)
+		{
+			ADCresult = ADC_DataSingleGet(ADC0);
+			ADCObj.bits.ADCSample=0;
+		}
+	}
+}
+
+void StartADC0Sample()
+{
+	ADCObj.bits.ADCSample=1;
+}
+
+uint32_t GetADC0()
+{
+	return ADCresult;
+}
+#endif
+
+uint32_t GetADC0()
+{
+	  ADC_Start(ADC0, adcStartSingle);
+	  while ( ( ADC0->STATUS & ADC_STATUS_SINGLEDV ) == 0 ){}
+	  return ADC_DataSingleGet(ADC0);
+
+}
 
 
 /** @} (end addtogroup app) */
