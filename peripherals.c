@@ -38,14 +38,20 @@ void InitGPIO(void) {
 
 	/*UART Function Related GPIOs*/
 
+
+
+#ifndef VCOMENABLED
+	//LE UART RX - PIN P37 on WSTK - PD9
+	GPIO_PinModeSet(gpioPortD, 9, gpioModeInput, 0);
+
+	//LE UART TX - PIN P4 on WSTK - PD10
+	GPIO_PinModeSet(gpioPortD, 10, gpioModePushPull, 1);
+
+#else
+
 	//LE UART TX - PIN P9 on WSTK
 	GPIO_PinModeSet(gpioPortA, 0, gpioModePushPull, 1);
 
-#if PD9FORRX
-	//LE UART RX - PIN P37 on WSTK
-	//GPIO_PinModeSet(gpioPortD, 9, gpioModeInput, 0);
-
-#else
 	//LE UART RX - PIN P11 on WSTK
 	GPIO_PinModeSet(gpioPortA, 1, gpioModeInput, 0);
 
@@ -334,29 +340,40 @@ void InitLEUART0(void) {
 
 	LEUART_Init(LEUART0, &initleuart);
 
-	/* Set up RX pin */
 
-#if PD9FORRX
+
+#ifndef VCOMENABLED
+
+	/* Set up RX pin */
+	//LE UART RX - PIN P37 on WSTK - PD9
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
 			| LEUART_ROUTELOC0_RXLOC_LOC16; //PD9
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_RXPEN;
+
+	/* Set up TX pin */
+	//LE UART RX - PIN P4 on WSTK - PD10
+	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_TXLOC_MASK))
+			| LEUART_ROUTELOC0_TXLOC_LOC18; //PD10
+	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_TXPEN;
+
 #else
 
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_RXLOC_MASK))
 			| LEUART_ROUTELOC0_RXLOC_LOC0; //PA1
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_RXPEN;
 
-#endif
+
 
 	/* Set up TX pin */
 	LEUART0->ROUTELOC0 = (LEUART0->ROUTELOC0 & (~_LEUART_ROUTELOC0_TXLOC_MASK))
 			| LEUART_ROUTELOC0_TXLOC_LOC0; //PA0
 	LEUART0->ROUTEPEN = LEUART0->ROUTEPEN | LEUART_ROUTEPEN_TXPEN;
 
+#endif
 	/*Set to clear receive buffer and the RX shift register.*/
 	//LEUART0->CMD = LEUART_CMD_CLEARRX;
 
-	//LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
+	LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
 
 	  /* Enable LEUART1 interrupt vector */
 	  NVIC_ClearPendingIRQ(LEUART0_IRQn);
