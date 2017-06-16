@@ -373,12 +373,15 @@ void InitLEUART0(void) {
 	/*Set to clear receive buffer and the RX shift register.*/
 	//LEUART0->CMD = LEUART_CMD_CLEARRX;
 
+#if LEUART_INT
+
 	LEUART_IntEnable(LEUART0, LEUART_IEN_RXDATAV );
 
-	  /* Enable LEUART1 interrupt vector */
+	/* Enable LEUART1 interrupt vector */
 	  NVIC_ClearPendingIRQ(LEUART0_IRQn);
 	  NVIC_EnableIRQ(LEUART0_IRQn);
 
+#endif
 
 	// [LEUART0 initialization]$
 
@@ -434,8 +437,9 @@ void UART_TxOut(uint8_t * buffer, uint16_t size)
 {
 	uint16_t counter;
 
-	for(counter=0; counter<size; counter++)
+	for(counter=0; ((counter<size)||(*buffer =='\n')); counter++)
 	{
+
 		LEUART_Tx(LEUART0, *buffer++);
 
 	}
@@ -492,26 +496,31 @@ void UART_RXHandler(void)
 
 void LED0onUARTmessage(void)
 {
-	  sprintf((char *)UARTbuffer, "LED0 On\n\r");
+	  sprintf((char *)UARTbuffer, "LED0 On\r\n");
 	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+
+
 }
 
 void LED0offUARTmessage(void)
 {
-	  sprintf((char *)UARTbuffer, "LED0 Off\n\r");
+	  sprintf((char *)UARTbuffer, "LED0 Off\r\n");
 	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+
 }
 
 void LED1onUARTmessage(void)
 {
-	  sprintf((char *)UARTbuffer, "LED1 On\n\r");
+	  sprintf((char *)UARTbuffer, "LED1 On\r\n");
 	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+
 }
 
 void LED1offUARTmessage(void)
 {
-	  sprintf((char *)UARTbuffer, "LED1 Off\n\r");
+	  sprintf((char *)UARTbuffer, "LED1 Off\r\n");
 	  UART_Tx((uint8_t *)UARTbuffer, UARTBUFFERSIZE);
+
 }
 
 
